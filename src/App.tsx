@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 
 // ── Types ───────────────────────────────────────────────────────────────────
-type View = 'home' | 'crew' | 'trip_dashboard' | 'guest_survey' | 'vault' | 'new_trip' | 'account_setup';
+type View = 'home' | 'crew' | 'trip_dashboard' | 'guest_survey' | 'vault' | 'new_trip' | 'account_setup' | 'library' | 'transportation' | 'calendar' | 'keepsake' | 'map' | 'packing' | 'subscription';
 
 interface GuestContent {
   id: number | string;
@@ -176,7 +176,14 @@ function App() {
 
   const globalSidebarItems = [
     { id: 'home', label: 'Home Dashboard', icon: LayoutDashboard },
+    { id: 'library', label: 'The Library', icon: BookOpen },
+    { id: 'transportation', label: 'Transportation', icon: Compass },
+    { id: 'calendar', label: 'Crowd Calendar', icon: Calendar },
+    { id: 'map', label: 'Interactive Map', icon: Map },
+    { id: 'packing', label: 'Smart Packing', icon: Umbrella },
+    { id: 'keepsake', label: 'Digital Keepsake', icon: Camera },
     { id: 'crew', label: 'Family & Friends', icon: Users },
+    { id: 'subscription', label: 'Citadel Plan', icon: Crown },
   ];
 
   const sidebarItems = isTripMode ? [] : globalSidebarItems;
@@ -712,6 +719,84 @@ function App() {
                     </div>
                     <span className="font-bold text-sm">Add New Adventure</span>
                   </div>
+                </div>
+              </div>
+
+              <div className="mb-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Dining Reservation Sniper Widget */}
+                <div className="luxury-card p-6 md:p-8 border-t-4 border-gold bg-gradient-to-br from-white to-gold/5 flex flex-col items-start text-left relative overflow-hidden group shadow-md hover:shadow-lg transition-shadow">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-gold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
+                  <div className="flex justify-between items-start w-full mb-3 relative z-10">
+                     <h3 className="text-2xl font-header flex items-center gap-2"><Utensils size={20} className="text-gold" /> Dining Sniper</h3>
+                     <span className="bg-navy px-2.5 py-1 rounded-md text-[9px] font-black uppercase tracking-widest text-gold animate-pulse flex items-center gap-1.5"><RefreshCw size={8} className="animate-spin" /> Scanning</span>
+                  </div>
+                  <p className="text-xs text-navy/60 mb-8 relative z-10 max-w-sm">Currently hunting for your hard-to-get table service reservations.</p>
+                  
+                  <div className="w-full space-y-3 relative z-10">
+                    <div className="bg-white/80 backdrop-blur-md border border-navy/10 p-4 rounded-2xl flex items-center justify-between shadow-sm">
+                       <div>
+                         <span className="font-bold text-sm block text-navy mb-0.5">Space 220 Restaurant</span>
+                         <span className="text-[10px] font-black text-navy/50 uppercase tracking-widest block flex items-center gap-1"><Calendar size={10}/> Oct 14 • Dinner (4 Guests)</span>
+                       </div>
+                       <RefreshCw size={14} className="text-gold animate-spin opacity-50" />
+                    </div>
+                    <div className="bg-white/80 backdrop-blur-md border border-navy/10 p-4 rounded-2xl flex items-center justify-between shadow-sm">
+                       <div>
+                         <span className="font-bold text-sm block text-navy mb-0.5">Oga's Cantina</span>
+                         <span className="text-[10px] font-black text-navy/50 uppercase tracking-widest block flex items-center gap-1"><Calendar size={10}/> Oct 16 • Drinks (2 Guests)</span>
+                       </div>
+                       <RefreshCw size={14} className="text-gold animate-spin opacity-50" />
+                    </div>
+                  </div>
+                  <button className="mt-6 text-[10px] font-black uppercase tracking-widest text-navy/40 hover:text-gold flex items-center gap-1 transition-colors relative z-10 bg-navy/5 px-4 py-2 rounded-lg hover:bg-gold/10"><Plus size={12}/> New Alert</button>
+                </div>
+
+                {/* Budget & Expense Tracker Widget */}
+                <div className="luxury-card p-6 md:p-8 border-t-4 border-emerald-400 bg-gradient-to-br from-white to-emerald-50/50 flex flex-col items-start text-left relative overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                   <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
+                   <div className="flex justify-between items-start w-full mb-4 relative z-10">
+                     <h3 className="text-2xl font-header flex items-center gap-2 text-navy"><PieChart size={20} className="text-emerald-500" /> Trip Budget</h3>
+                     <span className="bg-emerald-100 border border-emerald-200 px-2.5 py-1 rounded-md text-[9px] font-black uppercase tracking-widest text-emerald-700 flex items-center gap-1"><CheckCircle size={10} /> On Track</span>
+                   </div>
+                   
+                   <div className="flex items-end gap-3 mb-8 relative z-10">
+                     <span className="text-5xl font-header leading-none text-navy">$3,450</span>
+                     <span className="text-sm font-bold text-navy/40 mb-1">/ $5,000</span>
+                   </div>
+
+                   <div className="w-full relative z-10 mb-2">
+                      <div className="h-2 w-full bg-navy/5 rounded-full overflow-hidden mb-3">
+                         <div className="h-full bg-emerald-400 rounded-full" style={{ width: '69%' }}></div>
+                      </div>
+                      <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-navy/50">
+                         <span>69% Spent</span>
+                         <span>$1,550 Remaining</span>
+                      </div>
+                   </div>
+
+                   <div className="flex flex-wrap gap-3 w-full mt-auto relative z-10 pt-4">
+                     <div className="flex-1 min-w-[100px] bg-white border border-navy/5 rounded-2xl p-3 flex items-center gap-3 shadow-sm">
+                        <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center shrink-0"><Home size={14}/></div>
+                        <div>
+                          <span className="text-[9px] font-black uppercase tracking-widest text-navy/40 block mb-0.5">Hotel</span>
+                          <span className="text-sm font-bold text-navy block leading-none">$1.8k</span>
+                        </div>
+                     </div>
+                     <div className="flex-1 min-w-[100px] bg-white border border-navy/5 rounded-2xl p-3 flex items-center gap-3 shadow-sm">
+                        <div className="w-8 h-8 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center shrink-0"><Map size={14}/></div>
+                        <div>
+                          <span className="text-[9px] font-black uppercase tracking-widest text-navy/40 block mb-0.5">Tickets</span>
+                          <span className="text-sm font-bold text-navy block leading-none">$950</span>
+                        </div>
+                     </div>
+                     <div className="flex-1 min-w-[100px] bg-white border border-navy/5 rounded-2xl p-3 flex items-center gap-3 shadow-sm">
+                        <div className="w-8 h-8 rounded-xl bg-rose/10 text-rose flex items-center justify-center shrink-0"><Utensils size={14}/></div>
+                        <div>
+                          <span className="text-[9px] font-black uppercase tracking-widest text-navy/40 block mb-0.5">Food</span>
+                          <span className="text-sm font-bold text-navy block leading-none">$420</span>
+                        </div>
+                     </div>
+                   </div>
                 </div>
               </div>
 
@@ -1578,146 +1663,1034 @@ function App() {
                   </button>
                 </div>
 
-                <div className="grid grid-cols-2 gap-6">
-                  {members.map((member, index) => (
-                    <div key={member.id} className="luxury-card p-6 flex flex-col gap-6 group hover:border-gold/30 transition-all text-left relative">
-                      <button
-                        onClick={() => { setEditingMember({ ...member }); setEditingMemberSource('global'); }}
-                        className="absolute inset-0 z-0 cursor-pointer"
-                        aria-label={`Edit ${member.name}`}
-                      />
-                      <div className="flex justify-between items-start relative z-10 pointer-events-none">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-navy/5 rounded-2xl flex items-center justify-center font-black text-navy/40">
-                            {index + 1}
-                          </div>
-                          <div>
-                            <h4 className="font-black text-lg">{member.name || 'New Member'}</h4>
-                            <span className="text-[10px] opacity-40 uppercase font-black tracking-widest">{member.email || 'No email provided'}</span>
-                          </div>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                  <div className="lg:col-span-8">
+                     <div className="flex justify-between items-center mb-6">
+                        <h3 className="text-xl font-header flex items-center gap-2"><Users size={20} className="text-gold" /> The Roster</h3>
+                     </div>
+                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                       {members.map((member, index) => (
+                         <div key={member.id} className="luxury-card p-6 flex flex-col gap-6 group hover:border-gold/30 transition-all text-left relative bg-white border border-navy/5 shadow-sm">
+                           <button
+                             onClick={() => { setEditingMember({ ...member }); setEditingMemberSource('global'); }}
+                             className="absolute inset-0 z-0 cursor-pointer"
+                             aria-label={`Edit ${member.name}`}
+                           />
+                           <div className="flex justify-between items-start relative z-10 pointer-events-none">
+                             <div className="flex items-center gap-4">
+                               <div className="w-12 h-12 bg-navy/5 rounded-2xl flex items-center justify-center font-black text-navy/40">
+                                 {index + 1}
+                               </div>
+                               <div>
+                                 <h4 className="font-bold text-lg text-navy">{member.name || 'New Member'}</h4>
+                                 <span className="text-[10px] text-navy/40 uppercase font-black tracking-widest">{member.email || 'No email provided'}</span>
+                               </div>
+                             </div>
+                             <button
+                               title="Delete Member"
+                               onClick={(e) => { e.stopPropagation(); setMembers(members.filter(m => m.id !== member.id)); }}
+                               className="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-rose/5 rounded-lg pointer-events-auto"
+                             >
+                               <Plus size={16} className="rotate-45 text-rose/40 hover:text-rose" />
+                             </button>
+                           </div>
+
+                           <div className="grid grid-cols-4 gap-3 relative z-10 pointer-events-none">
+                             <div className="bg-navy/[0.02] p-3 rounded-xl border border-navy/5">
+                               <label className="text-[8px] font-black opacity-40 text-navy block uppercase mb-1">Inches</label>
+                               <span className="font-bold text-sm text-navy">{member.height || '--'}</span>
+                             </div>
+                             <div className="bg-navy/[0.02] p-3 rounded-xl border border-navy/5">
+                               <label className="text-[8px] font-black opacity-40 text-navy block uppercase mb-1">Age</label>
+                               <span className="font-bold text-sm text-navy">{member.age || '--'}</span>
+                             </div>
+                             <div className="bg-navy/[0.02] p-3 rounded-xl col-span-2 border border-navy/5">
+                               <label className="text-[8px] font-black opacity-40 text-navy block uppercase mb-1">Allergies</label>
+                               <span className="font-bold text-sm text-navy truncate block">{member.allergies || 'None'}</span>
+                             </div>
+                           </div>
+                         </div>
+                       ))}
+                     </div>
+                  </div>
+
+                  {/* Co-Planners Column */}
+                  <div className="lg:col-span-4 flex flex-col gap-6">
+                     <div className="flex justify-between items-center mb-0">
+                        <h3 className="text-xl font-header flex items-center gap-2"><Key size={20} className="text-gold" /> Co-Planners</h3>
+                     </div>
+                     <div className="luxury-card p-6 border border-navy/5 shadow-sm bg-gradient-to-br from-white to-navy/5 relative overflow-hidden h-full">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-gold/10 rounded-full blur-2xl -mt-16 -mr-16 pointer-events-none"></div>
+                        <p className="text-xs text-navy/60 mb-6 relative z-10">Invite family members to view the itinerary, or grant them edit access to help plan the magic.</p>
+                        
+                        <div className="space-y-3 relative z-10 mb-8">
+                           {/* Existing Co-Planner */}
+                           <div className="bg-white border border-navy/5 p-4 rounded-2xl flex items-center justify-between shadow-sm group">
+                              <div className="flex items-center gap-3">
+                                 <div className="w-8 h-8 rounded-full bg-navy text-white flex items-center justify-center text-xs font-bold">LU</div>
+                                 <div className="text-left">
+                                    <span className="font-bold text-sm text-navy block mb-0.5">Lauren Uchiyama</span>
+                                    <span className="text-[9px] font-black uppercase tracking-widest text-teal-600 bg-teal-50 px-1.5 py-0.5 rounded border border-teal-100 flex items-center gap-1 w-fit"><Settings size={8} /> Editor</span>
+                                 </div>
+                              </div>
+                              <button className="text-navy/20 hover:text-navy transition-colors" title="Manage Role"><ChevronDown size={16} /></button>
+                           </div>
+
+                           {/* Pending Invitation */}
+                           <div className="bg-white/50 border border-navy/5 p-4 rounded-2xl flex items-center justify-between group">
+                              <div className="flex items-center gap-3 opacity-60">
+                                 <div className="w-8 h-8 rounded-full border border-dashed border-navy/30 text-navy/40 flex items-center justify-center text-xs font-bold"><Mail size={12} /></div>
+                                 <div className="text-left">
+                                    <span className="font-bold text-sm text-navy block mb-0.5">grandma@example.com</span>
+                                    <span className="text-[9px] font-black uppercase tracking-widest text-navy/40 bg-navy/5 px-1.5 py-0.5 rounded border border-navy/10 flex items-center gap-1 w-fit"><Eye size={8} /> Viewer (Pending)</span>
+                                 </div>
+                              </div>
+                              <button className="text-rose/40 hover:text-rose transition-colors" title="Cancel Invite"><Plus size={16} className="rotate-45" /></button>
+                           </div>
                         </div>
-                        <button
-                          title="Delete Member"
-                          onClick={(e) => { e.stopPropagation(); setMembers(members.filter(m => m.id !== member.id)); }}
-                          className="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-rose/5 rounded-lg pointer-events-auto"
-                        >
-                          <Plus size={16} className="rotate-45 text-rose/40 hover:text-rose" />
-                        </button>
+
+                        {/* Invite Form */}
+                        <div className="mt-auto relative z-10 p-5 bg-white rounded-2xl border border-navy/5 shadow-sm">
+                           <h4 className="font-header text-sm text-navy mb-3">Send Invitation</h4>
+                           <div className="space-y-3">
+                              <input type="email" placeholder="Email address..." className="w-full bg-navy/5 border border-transparent rounded-lg px-3 py-2 text-xs font-bold text-navy outline-none focus:border-gold transition-colors" />
+                              <div className="flex gap-2">
+                                 <select title="Select Role" className="flex-1 bg-navy/5 border border-transparent rounded-lg px-3 py-2 text-xs font-bold text-navy outline-none focus:border-gold transition-colors cursor-pointer appearance-none">
+                                    <option value="viewer">Viewer</option>
+                                    <option value="editor">Editor</option>
+                                 </select>
+                                 <button className="bg-navy text-white px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-gold transition-colors break-keep whitespace-nowrap">Invite</button>
+                              </div>
+                           </div>
+                        </div>
+
+                     </div>
+                  </div>
+                </div>
+              </div>
+            )
+          }
+
+
+
+
+          {/* 4. THE LIBRARY VIEW */}
+          {activeView === 'library' && (
+            <div className="view-library animate-in fade-in zoom-in-95 duration-300">
+              <div className="text-left mb-8">
+                <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><BookOpen className="text-gold" /> The Library</h2>
+                <p className="opacity-60">Explore attractions, dining, shows, and experiences to build your perfect trip.</p>
+              </div>
+
+              <div className="flex flex-col md:flex-row gap-4 mb-6">
+                <div className="relative flex-1">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-navy/40" size={18} />
+                  <input
+                    title="Search library"
+                    type="text"
+                    placeholder="Search for rides, restaurants, or experiences..."
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    className="w-full pl-12 pr-4 py-4 rounded-2xl border border-navy/10 bg-white/50 backdrop-blur-md shadow-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all font-bold text-navy"
+                  />
+                </div>
+                <div className="flex bg-navy/5 p-1.5 rounded-2xl overflow-x-auto shrink-0 custom-scrollbar items-center border border-navy/5">
+                  {['All', ...researchCategories].map(cat => (
+                    <button
+                      key={cat}
+                      title={`Filter by ${cat}`}
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => setResearchFilter(cat)}
+                      className={`px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${researchFilter === cat ? 'bg-white text-navy shadow-[0_2px_10px_rgba(10,25,41,0.06)] scale-100' : 'text-navy/50 hover:text-navy hover:bg-navy/5 scale-95 hover:scale-100'}`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Advanced Filters */}
+              <div className="flex flex-wrap gap-2 mb-8 items-center bg-white/50 backdrop-blur-md p-3 rounded-2xl border border-navy/5 shadow-sm">
+                <Filter size={14} className="text-navy/40 ml-2 mr-1" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-navy/40 mr-2">Filter by Park:</span>
+                {['All Parks', 'Magic Kingdom', 'Epcot', 'Hollywood Studios', 'Animal Kingdom'].map(park => (
+                  <button
+                    key={park}
+                    title={`Filter by ${park}`}
+                    onClick={() => setParkFilter(park)}
+                    className={`px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border ${parkFilter === park ? 'bg-navy text-white border-navy shadow-md' : 'bg-white text-navy/60 border-navy/10 hover:border-gold/50 hover:text-gold hover:shadow-sm'}`}
+                  >
+                    {park}
+                  </button>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {mockResearchItems
+                  .filter(item => parkFilter === 'All Parks' || item.park.toLowerCase() === parkFilter.toLowerCase())
+                  .filter(item => researchFilter === 'All' || item.type === researchFilter)
+                  .filter(item => !searchText || item.title.toLowerCase().includes(searchText.toLowerCase()) || item.description.toLowerCase().includes(searchText.toLowerCase()))
+                  .map(item => (
+                    <div key={item.id} className="luxury-card overflow-hidden group hover:-translate-y-2 hover:shadow-[0_12px_30px_rgba(10,25,41,0.08)] transition-all duration-400 flex flex-col items-start text-left border border-navy/5 bg-white relative">
+                      <div className={`absolute top-0 left-0 w-full h-1.5 transition-all duration-300 group-hover:h-2 ${item.type === 'Ride' ? 'bg-gradient-to-r from-gold to-yellow-300' : item.type === 'Dining' ? 'bg-gradient-to-r from-rose to-pink-400' : item.type === 'Show' ? 'bg-gradient-to-r from-teal to-emerald-400' : 'bg-gradient-to-r from-navy to-blue-500'}`}></div>
+                      <div className="p-6 w-full flex-1 flex flex-col pt-7">
+                        <div className="flex justify-between items-start mb-4">
+                          <span className={`text-[9px] font-black uppercase tracking-widest px-2.5 py-1.5 rounded-md border flex items-center gap-1.5 ${item.type === 'Ride' ? 'bg-gold/10 text-gold-dark border-gold/30' : item.type === 'Dining' ? 'bg-rose/10 text-rose border-rose/30' : item.type === 'Show' ? 'bg-teal/10 text-teal border-teal/30' : 'bg-navy/5 text-navy border-navy/10'}`}>
+                             {item.type === 'Ride' ? <Rocket size={10} /> : item.type === 'Dining' ? <Utensils size={10} /> : item.type === 'Show' ? <Star size={10} /> : <Coffee size={10} />}
+                             {item.type}
+                          </span>
+                          {item.rating && (
+                            <div className="flex items-center gap-1.5 bg-navy/5 px-2.5 py-1.5 rounded-lg border border-navy/5">
+                              <Star size={12} className="text-gold fill-gold" />
+                              <span className="text-[11px] font-black text-navy">{item.rating}</span>
+                            </div>
+                          )}
+                        </div>
+                        
+                        <h3 className="font-header text-xl mb-1 group-hover:text-gold transition-colors line-clamp-2 leading-tight">{item.title}</h3>
+                        <div className="flex items-center gap-1.5 mb-4 text-[10px] font-black uppercase tracking-widest text-navy/40">
+                           <MapPin size={10} /> {item.park}
+                        </div>
+                        
+                        <p className="text-xs text-navy/60 mb-6 line-clamp-3 flex-1 leading-relaxed">{item.description}</p>
+                        
+                        <div className="flex flex-wrap gap-2 mt-auto w-full pt-4 border-t border-navy/5">
+                          {item.ticketClass && <span className="text-[9px] font-black uppercase tracking-widest text-gold bg-gold/10 px-2 py-1 rounded border border-gold/20">{item.ticketClass}</span>}
+                          {item.thrillLevel && <span className="text-[9px] px-2 py-1 bg-navy/5 rounded text-navy/60 font-black uppercase tracking-widest border border-navy/10">Thrill: {item.thrillLevel}</span>}
+                          {item.heightReq && item.heightReq !== 'Any' && <span className="text-[9px] px-2 py-1 bg-navy/5 rounded text-navy/60 font-black uppercase tracking-widest flex items-center gap-1 border border-navy/10"><Ruler size={10} /> {item.heightReq}</span>}
+                        </div>
+                      </div>
+                      
+                      {/* Hover Reveal Action */}
+                      <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white/95 backdrop-blur-sm border-t border-navy/5 flex items-center justify-between pointer-events-none group-hover:pointer-events-auto">
+                         <span className="text-[10px] font-black uppercase tracking-widest text-navy/50">{item.length ? `Duration: ${item.length}` : 'Explore Details'}</span>
+                         <div className="w-8 h-8 rounded-full bg-gold text-navy flex items-center justify-center -rotate-45 group-hover:rotate-0 transition-all duration-300 shadow-sm">
+                            <ArrowRight size={14} />
+                         </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+
+          {/* 5. TRANSPORTATION HUB VIEW */}
+          {activeView === 'transportation' && (
+            <div className="view-transportation animate-in fade-in zoom-in-95 duration-300">
+              <div className="text-left mb-8">
+                <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><Compass className="text-gold" /> Transportation Explorer</h2>
+                <p className="opacity-60">Master the resort transit networks and estimate your travel times between parks and hotels.</p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                {/* Navigator Tool (Left) */}
+                <div className="lg:col-span-5 flex flex-col gap-6">
+                  <div className="luxury-card p-8 bg-gradient-to-br from-navy to-[#1a3345] text-white overflow-hidden relative border-t-4 border-gold shadow-xl">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
+                    
+                    <h3 className="font-header text-2xl mb-6 relative z-10 flex items-center gap-2"><Map size={20} className="text-gold" /> Route Navigator</h3>
+                    
+                    <div className="relative z-10 space-y-4">
+                      {/* From Field */}
+                      <div>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-white/50 block mb-2 pl-2">Starting Point</label>
+                        <div className="relative">
+                          <MapPin size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gold z-10" />
+                          <select title="Starting Point" className="w-full bg-white/10 border border-white/20 rounded-xl py-3 pl-12 pr-4 text-sm font-bold text-white appearance-none outline-none focus:border-gold transition-colors cursor-pointer relative z-0">
+                            <option value="pop" className="text-navy">Disney's Pop Century Resort</option>
+                            <option value="poly" className="text-navy">Disney's Polynesian Village</option>
+                            <option value="mk" className="text-navy">Magic Kingdom Park</option>
+                            <option value="ep" className="text-navy">Epcot</option>
+                            <option value="hs" className="text-navy">Disney's Hollywood Studios</option>
+                            <option value="ak" className="text-navy">Disney's Animal Kingdom</option>
+                            <option value="ds" className="text-navy">Disney Springs</option>
+                          </select>
+                          <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 pointer-events-none z-10" />
+                        </div>
+                      </div>
+                      
+                      {/* Connector Line */}
+                      <div className="h-6 flex items-center justify-center relative">
+                         <div className="absolute inset-y-0 w-0.5 border-l-2 border-dashed border-white/20"></div>
+                         <div className="w-8 h-8 rounded-full bg-navy border-2 border-white/20 z-10 flex items-center justify-center text-white/50 hover:text-white hover:border-gold cursor-pointer transition-colors shadow-sm">
+                            <Repeat size={14} className="rotate-90" />
+                         </div>
                       </div>
 
-                      <div className="grid grid-cols-4 gap-4 relative z-10 pointer-events-none">
-                        <div className="bg-navy/[0.02] p-4 rounded-xl">
-                          <label className="text-[8px] font-black opacity-30 block uppercase mb-1">Inches</label>
-                          <span className="font-bold">{member.height || '--'}</span>
-                        </div>
-                        <div className="bg-navy/[0.02] p-4 rounded-xl">
-                          <label className="text-[8px] font-black opacity-30 block uppercase mb-1">Age</label>
-                          <span className="font-bold">{member.age || '--'}</span>
-                        </div>
-                        <div className="bg-navy/[0.02] p-4 rounded-xl col-span-2">
-                          <label className="text-[8px] font-black opacity-30 block uppercase mb-1">Allergies</label>
-                          <span className="font-bold truncate block">{member.allergies || 'None'}</span>
+                      {/* To Field */}
+                      <div>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-white/50 block mb-2 pl-2">Destination</label>
+                        <div className="relative">
+                          <MapPin size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-rose z-10" />
+                          <select title="Destination" className="w-full bg-white/10 border border-white/20 rounded-xl py-3 pl-12 pr-4 text-sm font-bold text-white appearance-none outline-none focus:border-gold transition-colors cursor-pointer relative z-0">
+                            <option value="hs" className="text-navy">Disney's Hollywood Studios</option>
+                            <option value="mk" className="text-navy">Magic Kingdom Park</option>
+                            <option value="ep" className="text-navy">Epcot</option>
+                            <option value="ak" className="text-navy">Disney's Animal Kingdom</option>
+                            <option value="poly" className="text-navy">Disney's Polynesian Village</option>
+                            <option value="pop" className="text-navy">Disney's Pop Century Resort</option>
+                            <option value="ds" className="text-navy">Disney Springs</option>
+                          </select>
+                          <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 pointer-events-none z-10" />
                         </div>
                       </div>
+                    </div>
+
+                    {/* Result Block */}
+                    <div className="mt-8 bg-white/10 rounded-2xl p-5 border border-white/10 relative z-10 backdrop-blur-sm shadow-md">
+                      <div className="flex justify-between items-center mb-3">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-gold bg-gold/10 px-2 py-0.5 rounded border border-gold/30 flex items-center gap-1"><Zap size={10}/> Fastest Route</span>
+                        <span className="text-2xl font-black">22 <span className="text-sm text-white/60 uppercase tracking-widest">MIN</span></span>
+                      </div>
+                      
+                      <div className="flex gap-2 items-stretch mt-4">
+                        <div className="flex-1 bg-white/5 rounded-xl p-3 flex flex-col items-center justify-center border border-white/10 text-center gap-1.5 hover:bg-white/10 transition-colors cursor-pointer group">
+                           <div className="w-8 h-8 rounded-full bg-[#E5F2FF] text-[#0066CC] flex items-center justify-center mb-1 group-hover:scale-110 transition-transform"><Cloud size={14} /></div>
+                           <span className="text-[9px] font-black uppercase tracking-widest text-white/80">Skyliner</span>
+                           <span className="text-xs font-bold text-white/50">14 min</span>
+                        </div>
+                        <div className="w-6 flex flex-col items-center justify-center shrink-0">
+                           <div className="w-1.5 h-1.5 rounded-full bg-white/20 mb-1"></div>
+                           <div className="w-1.5 h-1.5 rounded-full bg-white/20 mb-1"></div>
+                           <div className="w-1.5 h-1.5 rounded-full bg-white/20"></div>
+                        </div>
+                        <div className="flex-1 bg-white/5 rounded-xl p-3 flex flex-col items-center justify-center border border-white/10 text-center gap-1.5 hover:bg-white/10 transition-colors cursor-pointer group">
+                           <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mb-1 group-hover:scale-110 transition-transform"><Activity size={14} /></div>
+                           <span className="text-[9px] font-black uppercase tracking-widest text-white/80">Walk</span>
+                           <span className="text-xs font-bold text-white/50">8 min</span>
+                        </div>
+                      </div>
+                      <p className="text-[10px] text-white/50 text-center mt-4 uppercase tracking-widest font-black">Transfer at Caribbean Beach Station</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Transit Methods (Right) */}
+                <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[
+                    { title: 'Disney Skyliner', icon: <Cloud size={18} />, colorClass: 'bg-blue-100/50 text-blue-600 border-blue-200 group-hover:border-blue-400 group-hover:bg-blue-600 group-hover:text-white', desc: 'Aerial gondola network connecting Epcot, Hollywood Studios, and 4 resorts with continuous loading.' },
+                    { title: 'Monorail System', icon: <RefreshCw size={18} />, colorClass: 'bg-indigo-100/50 text-indigo-600 border-indigo-200 group-hover:border-indigo-400 group-hover:bg-indigo-600 group-hover:text-white', desc: 'The highway in the sky connecting Magic Kingdom, Epcot, and 3 deluxe resort hotels.' },
+                    { title: 'Bus Transportation', icon: <Activity size={18} />, colorClass: 'bg-teal/10 text-teal border-teal/20 group-hover:border-teal/40 group-hover:bg-teal group-hover:text-white', desc: 'Complimentary bus service available from all resorts to all theme parks and Disney Springs.' },
+                    { title: 'Watercraft', icon: <Droplets size={18} />, colorClass: 'bg-cyan-100/50 text-cyan-600 border-cyan-200 group-hover:border-cyan-400 group-hover:bg-cyan-600 group-hover:text-white', desc: 'Scenic ferryboats, water taxis, and Friendship boats servicing select waterfront resorts and parks.' },
+                    { title: 'Walking Paths', icon: <UserPlus size={18} />, colorClass: 'bg-green-100/50 text-green-600 border-green-200 group-hover:border-green-400 group-hover:bg-green-600 group-hover:text-white', desc: 'Dedicated pedestrian walkways. Epcot to Hollywood Studios takes ~20 minutes.' },
+                    { title: 'Ride Share (Minnie Vans)', icon: <Target size={18} />, colorClass: 'bg-rose/10 text-rose border-rose/20 group-hover:border-rose/40 group-hover:bg-rose group-hover:text-white', desc: 'Personalized premium point-to-point transportation operated by Lyft. Extra cost applies.' }
+                  ].map((method, idx) => (
+                    <div key={idx} className="luxury-card p-5 border border-navy/5 bg-white group hover:-translate-y-1 transition-all duration-300 text-left flex flex-col items-start cursor-pointer hover:shadow-md relative overflow-hidden">
+                       <div className="absolute top-0 right-0 w-24 h-24 bg-navy/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/4 group-hover:bg-gold/10 transition-colors pointer-events-none"></div>
+                       <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-colors duration-300 ${method.colorClass}`}>
+                          {method.icon}
+                       </div>
+                       <h4 className="font-header text-lg mb-2 text-navy relative z-10">{method.title}</h4>
+                       <p className="text-xs text-navy/60 leading-relaxed mb-4 flex-1 relative z-10">{method.desc}</p>
+                       <div className="mt-auto pt-4 border-t border-navy/5 w-full flex items-center justify-between relative z-10">
+                          <span className="text-[9px] font-black uppercase tracking-widest text-navy/40 group-hover:text-gold transition-colors">View Network Map</span>
+                          <ArrowRight size={12} className="text-navy/20 group-hover:text-gold group-hover:translate-x-1 transition-all" />
+                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-            )
-          }
+            </div>
+          )}
 
 
+          {/* 6. CROWD CALENDAR VIEW */}
+          {activeView === 'calendar' && (
+            <div className="view-calendar animate-in fade-in zoom-in-95 duration-300">
+              <div className="text-left mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                <div>
+                  <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><Calendar className="text-gold" /> Crowd Calendar</h2>
+                  <p className="opacity-60">Plan your trip around historical crowd levels, events, and seasonal pricing.</p>
+                </div>
+                <div className="flex flex-wrap gap-4 bg-white px-4 py-3 rounded-2xl border border-navy/5 shadow-sm">
+                   <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-navy/60"><div className="w-3 h-3 rounded-full bg-emerald-100 border border-emerald-300"></div> Low</div>
+                   <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-navy/60"><div className="w-3 h-3 rounded-full bg-amber-100 border border-amber-300"></div> Moderate</div>
+                   <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-navy/60"><div className="w-3 h-3 rounded-full bg-rose/10 border border-rose/20"></div> High</div>
+                   <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-navy/60"><div className="w-3 h-3 rounded-full bg-purple-100 border border-purple-300"></div> Peak</div>
+                </div>
+              </div>
 
-
-          {/* 5. SECURE WALLET VIEW */}
-          {
-            activeView === 'vault' && (
-              <div className="view-vault">
-                <div className="text-left mb-10">
-                  <h2 className="text-3xl font-header mb-2">Secure Wallet & Settings</h2>
-                  <p className="opacity-60">Manage payment methods for mobile ordering and dining.</p>
+              <div className="luxury-card p-8 bg-white overflow-hidden relative border border-navy/5 shadow-md">
+                <div className="flex justify-between items-center mb-8">
+                   <h3 className="text-2xl font-header text-navy flex items-center gap-3">
+                     September 2026
+                     <div className="flex gap-1 ml-4">
+                       <button title="Previous Month" className="p-2 rounded-xl bg-navy/5 text-navy/40 hover:bg-navy/10 hover:text-navy transition-colors"><ChevronRight size={16} className="rotate-180" /></button>
+                       <button title="Next Month" className="p-2 rounded-xl bg-navy/5 text-navy/40 hover:bg-navy/10 hover:text-navy transition-colors"><ChevronRight size={16} /></button>
+                     </div>
+                   </h3>
+                   <div className="flex items-center gap-2">
+                     <button className="px-4 py-2 bg-navy/5 text-navy rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-navy/10 transition-colors">Today</button>
+                   </div>
                 </div>
 
-                <div className="grid grid-cols-12 gap-10">
-                  <div className="col-span-8">
-                    <div className="luxury-card p-10 mb-8">
-                      <div className="flex justify-between items-center mb-10">
-                        <h3 className="text-xl font-header">Payment Methods</h3>
-                        <button className="btn-primary-mini text-[9px]"><Plus size={12} /> Add Card</button>
-                      </div>
+                <div className="grid grid-cols-7 gap-3 md:gap-4">
+                  {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, i) => (
+                    <div key={i} className="text-center text-[10px] font-black uppercase tracking-widest text-navy/40 mb-2">{day}</div>
+                  ))}
+                  
+                  {/* Empty days for offset */}
+                  <div className="col-span-2"></div>
 
-                      <div className="p-8 bg-gradient-to-br from-navy to-[#1a3345] rounded-3xl text-white relative overflow-hidden text-left mb-6">
-                        <div className="relative z-10">
-                          <div className="flex justify-between mb-10">
-                            <CreditCard size={32} className="text-white/20" />
-                            <span className="text-[10px] font-black uppercase tracking-widest opacity-40">Plaid Secure</span>
+                  {Array.from({ length: 30 }).map((_, i) => {
+                     const date = i + 1;
+                     // generate mock crowd data
+                     let level = 'moderate';
+                     let color = 'bg-amber-50 border-amber-200 text-amber-700 hover:border-amber-400 hover:shadow-amber-100/50';
+                     let event = null;
+                     
+                     if (date >= 4 && date <= 7) {
+                         level = 'peak';
+                         color = 'bg-purple-50 border-purple-200 text-purple-700 hover:border-purple-400 hover:shadow-purple-100/50';
+                         event = 'Labor Day Weekend';
+                     } else if (date === 1 || date === 2 || date === 3) {
+                         level = 'high';
+                         color = 'bg-rose/5 border-rose/20 text-rose hover:border-rose/40 hover:shadow-rose-100/50';
+                     } else if (date >= 15 && date <= 18) {
+                         level = 'low';
+                         color = 'bg-emerald-50 border-emerald-200 text-emerald-700 hover:border-emerald-400 hover:shadow-emerald-100/50';
+                     } else if (date % 7 === 5 || date % 7 === 6) { // Weekends generally higher
+                         level = 'high';
+                         color = 'bg-rose/5 border-rose/20 text-rose hover:border-rose/40 hover:shadow-rose-100/50';
+                         if (date === 25) event = 'Halloween Party Start';
+                     }
+
+                     return (
+                      <div key={date} className={`md:h-28 h-20 rounded-2xl border-2 p-2 md:p-3 flex flex-col justify-between transition-all hover:scale-[1.03] cursor-pointer relative group shadow-sm hover:shadow-lg ${color}`}>
+                         <div className="flex justify-between items-start">
+                            <span className="font-header text-lg">{date}</span>
+                            {event && <Sparkles size={12} className="opacity-50" />}
+                         </div>
+                         <div className="text-left mt-auto">
+                            <span className="text-[9px] font-black uppercase tracking-widest opacity-60 block">{level}</span>
+                            {event && <span className="text-[9px] font-bold leading-tight mt-1 px-1.5 py-0.5 rounded-md bg-white/50 border border-white/20 block truncate group-hover:whitespace-normal group-hover:absolute group-hover:z-10 group-hover:bg-white group-hover:shadow-xl group-hover:w-[150%] md:group-hover:w-[200%] transition-all">{event}</span>}
+                         </div>
+                      </div>
+                     );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
+
+
+          {/* 7. DIGITAL VAULT VIEW */}
+          {
+            activeView === 'vault' && (
+              <div className="view-vault animate-in fade-in zoom-in-95 duration-300">
+                <div className="text-left mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                  <div>
+                    <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><ShieldCheck className="text-gold" /> The Vault</h2>
+                    <p className="opacity-60">Securely store and manage your tickets, reservations, itineraries, and payment methods.</p>
+                  </div>
+                  <button className="btn-primary-mini flex items-center gap-2">
+                     <Plus size={16} /> Add Document
+                  </button>
+                </div>
+
+                {/* Top Row: Important Documents & Payment Methods */}
+                <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 mb-8">
+                  {/* Documents Column */}
+                  <div className="xl:col-span-8 flex flex-col gap-6">
+                     <div className="luxury-card p-8 bg-white border border-navy/5 shadow-sm">
+                        <div className="flex justify-between items-center mb-6">
+                           <h3 className="text-xl font-header text-navy flex items-center gap-2"><Paperclip size={18} className="text-gold" /> Important Documents</h3>
+                           <button className="text-[10px] font-black uppercase tracking-widest text-navy/40 hover:text-navy transition-colors">View All</button>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                           {/* Airline Ticket Mock */}
+                           <div className="group border border-navy/10 rounded-2xl p-4 flex items-center gap-4 hover:border-gold/50 hover:bg-gold/5 cursor-pointer transition-all relative overflow-hidden">
+                              <div className="absolute left-0 top-0 bottom-0 w-1 bg-navy/10 group-hover:bg-gold transition-colors"></div>
+                              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                                 <Send className="-rotate-45" size={18} />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                 <h4 className="font-bold text-navy truncate">Delta Airlines Itinerary</h4>
+                                 <p className="text-[10px] uppercase font-black tracking-widest text-navy/40 mt-1">PDF • 2.4 MB</p>
+                              </div>
+                              <button title="Download" aria-label="Download" className="text-navy/20 group-hover:text-gold transition-colors"><Download size={16} /></button>
+                           </div>
+                           
+                           {/* Hotel Confirmation Mock */}
+                           <div className="group border border-navy/10 rounded-2xl p-4 flex items-center gap-4 hover:border-gold/50 hover:bg-gold/5 cursor-pointer transition-all relative overflow-hidden">
+                              <div className="absolute left-0 top-0 bottom-0 w-1 bg-navy/10 group-hover:bg-gold transition-colors"></div>
+                              <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+                                 <Home size={18} />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                 <h4 className="font-bold text-navy truncate">Polynesian Village Conf.</h4>
+                                 <p className="text-[10px] uppercase font-black tracking-widest text-navy/40 mt-1">IMAGE • 1.1 MB</p>
+                              </div>
+                              <button title="Download" aria-label="Download" className="text-navy/20 group-hover:text-gold transition-colors"><Download size={16} /></button>
+                           </div>
+
+                           {/* Rental Car Mock */}
+                           <div className="group border border-navy/10 rounded-2xl p-4 flex items-center gap-4 hover:border-gold/50 hover:bg-gold/5 cursor-pointer transition-all relative overflow-hidden">
+                              <div className="absolute left-0 top-0 bottom-0 w-1 bg-navy/10 group-hover:bg-gold transition-colors"></div>
+                              <div className="w-10 h-10 rounded-xl bg-teal/10 text-teal flex items-center justify-center shrink-0">
+                                 <Map size={18} />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                 <h4 className="font-bold text-navy truncate">Alamo Rental Agreement</h4>
+                                 <p className="text-[10px] uppercase font-black tracking-widest text-navy/40 mt-1">PDF • 800 KB</p>
+                              </div>
+                              <button title="Download" aria-label="Download" className="text-navy/20 group-hover:text-gold transition-colors"><Download size={16} /></button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                  {/* Payment Methods Column */}
+                  <div className="xl:col-span-4 flex flex-col gap-6">
+                    <div className="luxury-card p-8 bg-gradient-to-br from-navy to-[#1a3345] text-white overflow-hidden relative shadow-md h-full flex flex-col justify-between group">
+                      <div className="absolute top-0 right-0 w-48 h-48 bg-gold/10 rounded-full blur-3xl -mt-24 -mr-24 pointer-events-none group-hover:bg-gold/20 transition-colors"></div>
+                      
+                      <div className="relative z-10 box-border">
+                        <div className="flex justify-between items-center mb-8">
+                           <h3 className="text-xl font-header flex items-center gap-2"><CreditCard size={18} className="text-gold" /> Active Card</h3>
+                           <button className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors">Manage</button>
+                        </div>
+                        
+                        <div className="mb-8">
+                          <div className="flex justify-between items-center mb-2">
+                             <span className="text-[10px] font-black uppercase tracking-widest text-white/50">Card Number</span>
+                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1200px-Mastercard-logo.svg.png" alt="Mastercard" className="h-5 opacity-80" />
                           </div>
-                          <div className="text-xl font-header tracking-widest mb-10">•••• •••• •••• 4242</div>
-                          <div className="flex justify-between items-end">
-                            <div>
-                              <span className="block text-[8px] opacity-40 mb-1">HOLDER</span>
-                              <span className="font-bold text-sm">P. UCHIYAMA</span>
-                            </div>
-                            <div>
-                              <span className="block text-[8px] opacity-40 mb-1">EXPIRY</span>
-                              <span className="font-bold text-sm">12 / 28</span>
-                            </div>
+                          <div className="text-2xl font-header tracking-widest text-white drop-shadow-sm">•••• •••• •••• 4242</div>
+                        </div>
+
+                        <div className="flex justify-between items-end">
+                          <div>
+                            <span className="block text-[8px] font-black uppercase tracking-widest text-white/50 mb-1">Cardholder Name</span>
+                            <span className="font-bold text-sm tracking-wide">P. UCHIYAMA</span>
+                          </div>
+                          <div>
+                            <span className="block text-[8px] font-black uppercase tracking-widest text-white/50 mb-1">Expires</span>
+                            <span className="font-bold text-sm tracking-wide">12 / 28</span>
                           </div>
                         </div>
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
                       </div>
 
-                      <div className="flex items-center gap-3 p-5 bg-navy/[0.02] rounded-2xl border border-navy/5">
-                        <ShieldCheck size={20} className="text-teal" />
-                        <p className="text-[10px] opacity-60">Your card data is never stored locally. We use secure tokenization to handle reservations.</p>
+                      <div className="mt-8 pt-4 border-t border-white/10 flex items-center gap-3 relative z-10">
+                        <Lock size={14} className="text-teal" />
+                        <p className="text-[10px] font-black uppercase tracking-widest text-white/40 leading-relaxed">Secured with AES-256 Plaid Encryption</p>
                       </div>
                     </div>
                   </div>
+                </div>
 
-                  <div className="col-span-4">
-                    <div className="luxury-card p-8 flex flex-col gap-8 h-full">
-                      <div>
-                        <Settings size={20} className="gold-text mb-4" />
-                        <h4 className="text-sm font-header">Digital Concierges</h4>
-                        <p className="text-[10px] opacity-60 mt-1">Manage your active magic assistants.</p>
+                {/* Bottom Row: Tickets & Passes, Dining Confirmations */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                   {/* Tickets & Passes */}
+                   <div className="luxury-card p-8 bg-white border border-navy/5 shadow-sm">
+                      <div className="flex justify-between items-center mb-6">
+                         <h3 className="text-xl font-header text-navy flex items-center gap-2"><History size={18} className="text-gold" /> Theme Park Tickets</h3>
+                         <button className="text-[10px] font-black uppercase tracking-widest text-navy/40 hover:text-navy transition-colors">Link Ticket</button>
                       </div>
 
-                      <div className="space-y-10">
-                        <div>
-                          <div className="flex justify-between text-[9px] font-black uppercase opacity-40 mb-3">
-                            <span>Lightning Genies Active</span>
-                            <span>4 / 5</span>
-                          </div>
-                          <div className="w-full h-1 bg-navy/5 rounded-full overflow-hidden">
-                            <div className="w-[80%] h-full bg-gold"></div>
-                          </div>
-                        </div>
-                        <div>
-                          <div className="flex justify-between text-[9px] font-black uppercase opacity-40 mb-3">
-                            <span>Dining Assistants</span>
-                            <span>2 Active</span>
-                          </div>
-                          <div className="w-full h-1 bg-navy/5 rounded-full overflow-hidden">
-                            <div className="w-[40%] h-full bg-teal"></div>
-                          </div>
-                        </div>
+                      <div className="space-y-4">
+                         <div className="border border-gold/30 bg-gold/5 rounded-2xl p-5 relative overflow-hidden group cursor-pointer hover:shadow-md transition-all">
+                            <div className="absolute top-0 right-0 p-4"><CheckCircle size={16} className="text-gold" /></div>
+                            <span className="text-[9px] font-black uppercase tracking-widest text-gold block mb-1">Active Pass</span>
+                            <h4 className="font-header text-lg text-navy mb-4">4-Day Park Hopper Ticket</h4>
+                            
+                            <div className="flex items-center gap-4">
+                               <div className="w-10 h-10 bg-navy text-white rounded-full flex items-center justify-center font-black text-sm">PU</div>
+                               <div>
+                                  <span className="text-sm font-bold text-navy block">Patchen Uchiyama</span>
+                                  <span className="text-[10px] font-black uppercase tracking-widest text-navy/40">ID: TKT-8942-0193</span>
+                               </div>
+                            </div>
+                         </div>
+                         
+                         <div className="border border-navy/10 bg-white rounded-2xl p-5 relative overflow-hidden group cursor-pointer hover:border-navy/30 transition-all">
+                            <span className="text-[9px] font-black uppercase tracking-widest text-navy/40 block mb-1">Used Pass</span>
+                            <h4 className="font-header text-lg text-navy/60 mb-4">Mickey's Not-So-Scary Halloween</h4>
+                            
+                            <div className="flex items-center gap-4 opacity-60">
+                               <div className="w-10 h-10 bg-navy/10 text-navy rounded-full flex items-center justify-center font-black text-sm">PU</div>
+                               <div>
+                                  <span className="text-sm font-bold text-navy block">Patchen Uchiyama</span>
+                                  <span className="text-[10px] font-black uppercase tracking-widest text-navy/40">Oct 29, 2025</span>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+
+                   {/* Dining Confirmations */}
+                   <div className="luxury-card p-8 bg-white border border-navy/5 shadow-sm">
+                      <div className="flex justify-between items-center mb-6">
+                         <h3 className="text-xl font-header text-navy flex items-center gap-2"><Utensils size={18} className="text-gold" /> Dining Confirmations</h3>
+                         <button className="text-[10px] font-black uppercase tracking-widest text-navy/40 hover:text-navy transition-colors">Add Manually</button>
                       </div>
 
-                      <div className="mt-auto p-5 bg-gold/10 rounded-2xl border border-gold/10">
-                        <Target size={18} className="text-gold mb-2" />
-                        <span className="block text-[10px] font-black uppercase text-gold">Seamless Magic</span>
-                        <p className="text-[10px] opacity-40 mt-1 leading-relaxed">Assistants run quietly in the background to handle the logistics so you can focus on the fun.</p>
+                      <div className="space-y-4">
+                         {/* Dining Card 1 */}
+                         <div className="border border-navy/10 rounded-2xl p-5 flex items-start gap-4 hover:border-gold/30 hover:shadow-sm cursor-pointer transition-all bg-white relative">
+                            <div className="w-2 h-full absolute left-0 top-0 bg-gold rounded-l-xl"></div>
+                            <div className="w-12 h-12 bg-rose/10 text-rose rounded-xl flex items-center justify-center shrink-0 ml-2">
+                               <Coffee size={20} />
+                            </div>
+                            <div className="flex-1">
+                               <div className="flex justify-between items-start">
+                                  <h4 className="font-bold text-navy text-sm">Cinderella's Royal Table</h4>
+                                  <span className="bg-navy/5 text-navy px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest">Conf: #84920</span>
+                               </div>
+                               <p className="text-[10px] font-black uppercase tracking-widest text-navy/40 mt-1 mb-3">Magic Kingdom • Breakfast</p>
+                               <div className="flex items-center gap-4 text-xs font-bold text-navy/70">
+                                  <span className="flex items-center gap-1.5"><Calendar size={12} className="text-gold" /> Oct 15, 2026</span>
+                                  <span className="flex items-center gap-1.5"><Clock size={12} className="text-gold" /> 8:30 AM</span>
+                                  <span className="flex items-center gap-1.5"><Users size={12} className="text-gold" /> 4 Guests</span>
+                               </div>
+                            </div>
+                         </div>
+
+                         {/* Dining Card 2 */}
+                         <div className="border border-navy/10 rounded-2xl p-5 flex items-start gap-4 hover:border-gold/30 hover:shadow-sm cursor-pointer transition-all bg-white relative">
+                            <div className="w-2 h-full absolute left-0 top-0 bg-rose rounded-l-xl"></div>
+                            <div className="w-12 h-12 bg-navy/5 text-navy rounded-xl flex items-center justify-center shrink-0 ml-2">
+                               <Utensils size={20} />
+                            </div>
+                            <div className="flex-1">
+                               <div className="flex justify-between items-start">
+                                  <h4 className="font-bold text-navy text-sm">Le Cellier Steakhouse</h4>
+                                  <span className="bg-navy/5 text-navy px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest">Conf: #11933</span>
+                               </div>
+                               <p className="text-[10px] font-black uppercase tracking-widest text-navy/40 mt-1 mb-3">Epcot (Canada) • Dinner</p>
+                               <div className="flex items-center gap-4 text-xs font-bold text-navy/70">
+                                  <span className="flex items-center gap-1.5"><Calendar size={12} className="text-gold" /> Oct 16, 2026</span>
+                                  <span className="flex items-center gap-1.5"><Clock size={12} className="text-gold" /> 6:15 PM</span>
+                                  <span className="flex items-center gap-1.5"><Users size={12} className="text-gold" /> 2 Guests</span>
+                               </div>
+                            </div>
+                         </div>
                       </div>
-                    </div>
-                  </div>
+                   </div>
                 </div>
               </div>
             )
           }
 
+          {/* 7A. INTERACTIVE MAP VIEW */}
+          {
+            activeView === 'map' && (
+              <div className="view-map animate-in fade-in zoom-in-95 duration-500 h-[calc(100vh-140px)] flex flex-col">
+                <div className="flex justify-between items-end mb-6 shrink-0">
+                  <div>
+                    <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><Map className="text-gold" /> Interactive Map</h2>
+                    <p className="opacity-60">Visualize your itinerary and navigate the parks seamlessly.</p>
+                  </div>
+                  <div className="flex gap-2">
+                     <button className="bg-white border border-navy/10 text-navy px-4 py-2 rounded-xl text-xs font-bold shadow-sm flex items-center gap-2"><MapPin size={14} className="text-rose"/> Magic Kingdom</button>
+                     <button className="bg-white border border-navy/10 text-navy px-4 py-2 rounded-xl text-xs font-bold shadow-sm flex items-center gap-2"><Compass size={14} className="text-blue-500"/> Locate Me</button>
+                  </div>
+                </div>
 
+                <div className="flex-1 rounded-3xl overflow-hidden border border-navy/10 shadow-inner relative bg-[#e5e3df]">
+                   <img src="https://media.cntraveler.com/photos/5a709b1fbf104332ee402179/master/pass/Disney-Map__2018_WK12P_0939_CP4_MK_13054173877_Full_6819.jpg" alt="Disney Map Mock" className="w-full h-full object-cover opacity-80" />
+                   
+                   {/* Map Overlays Mock */}
+                   <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2">
+                      <div className="relative group cursor-pointer">
+                         <div className="w-10 h-10 bg-rose text-white rounded-full border-2 border-white flex items-center justify-center shadow-lg relative z-10 group-hover:scale-110 transition-transform">
+                            <Coffee size={18} />
+                         </div>
+                         <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white px-3 py-1.5 rounded-lg shadow-xl border border-navy/10 text-[10px] font-black uppercase tracking-widest text-navy whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                            Next Up: Sleepy Hollow
+                         </div>
+                      </div>
+                   </div>
 
-          {/* 5. TRIP CREATION WIZARD */}
+                   <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                      <div className="relative group cursor-pointer">
+                         <div className="w-8 h-8 bg-blue-500 text-white rounded-full border-2 border-white flex items-center justify-center shadow-lg relative z-10 group-hover:scale-110 transition-transform">
+                            <ShieldCheck size={14} />
+                         </div>
+                         <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white px-3 py-1.5 rounded-lg shadow-xl border border-navy/10 text-[10px] font-black uppercase tracking-widest text-navy whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                            Seven Dwarfs Mine Train (65m)
+                         </div>
+                      </div>
+                   </div>
+                   
+                   {/* Map Controls */}
+                   <div className="absolute bottom-6 right-6 flex flex-col gap-2">
+                      <button title="Zoom In" aria-label="Zoom In" className="w-10 h-10 bg-white rounded-xl shadow-lg border border-navy/5 flex items-center justify-center text-navy hover:bg-navy/5 transition-colors"><Plus size={18} /></button>
+                      <button title="Zoom Out" aria-label="Zoom Out" className="w-10 h-10 bg-white rounded-xl shadow-lg border border-navy/5 flex items-center justify-center text-navy hover:bg-navy/5 transition-colors"><Plus size={18} className="rotate-45" /></button>
+                   </div>
+                </div>
+              </div>
+            )
+          }
+
+          {/* 7B. SMART PACKING LIST VIEW */}
+          {
+            activeView === 'packing' && (
+              <div className="view-packing animate-in fade-in zoom-in-95 duration-500">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
+                  <div>
+                     <h2 className="text-4xl font-header mb-2 text-navy flex items-center gap-3"><Umbrella className="text-gold" /> Smart Packing</h2>
+                     <p className="opacity-60">AI-generated checklist based on your park days, reservations, and weather forecasts.</p>
+                  </div>
+                  <div className="flex gap-2">
+                     <button className="bg-white border border-navy/10 text-navy px-4 py-2 rounded-xl text-xs font-bold shadow-sm flex items-center gap-2"><RefreshCw size={14} className="text-teal" /> Refresh AI Suggestions</button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                   <div className="lg:col-span-8 flex flex-col gap-6">
+                      <div className="luxury-card p-8 bg-white border border-navy/5 shadow-sm">
+                         <div className="flex justify-between items-center mb-6">
+                            <h3 className="text-xl font-header text-navy">Your Checked List</h3>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-navy/40">12 / 45 Items Packed</span>
+                         </div>
+                         
+                         <div className="w-full h-2 bg-navy/5 rounded-full overflow-hidden mb-8">
+                            <div className="h-full bg-emerald-400" style={{ width: '25%' }}></div>
+                         </div>
+
+                         <div className="space-y-6">
+                            {/* Category: Park Essentials */}
+                            <div>
+                               <h4 className="text-sm font-bold text-navy mb-3 flex items-center gap-2 border-b border-navy/5 pb-2"><MapPin size={14} className="text-navy/40" /> Park Essentials</h4>
+                               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                  <label className="flex items-center gap-3 p-3 rounded-xl border border-navy/10 hover:bg-navy/5 cursor-pointer transition-colors bg-emerald-50/50 border-emerald-100">
+                                     <input type="checkbox" defaultChecked className="w-4 h-4 rounded text-emerald-500 focus:ring-emerald-500 accent-emerald-500" />
+                                     <span className="text-sm font-bold text-navy line-through opacity-60">MagicBands (x4)</span>
+                                  </label>
+                                  <label className="flex items-center gap-3 p-3 rounded-xl border border-navy/10 hover:bg-navy/5 cursor-pointer transition-colors">
+                                     <input type="checkbox" className="w-4 h-4 rounded text-gold focus:ring-gold accent-gold" />
+                                     <span className="text-sm font-bold text-navy">Portable Phone Chargers</span>
+                                  </label>
+                                  <label className="flex items-center gap-3 p-3 rounded-xl border border-navy/10 hover:bg-navy/5 cursor-pointer transition-colors">
+                                     <input type="checkbox" className="w-4 h-4 rounded text-gold focus:ring-gold accent-gold" />
+                                     <span className="text-sm font-bold text-navy">Refillable Water Bottles</span>
+                                  </label>
+                                  <label className="flex items-center gap-3 p-3 rounded-xl border border-navy/10 hover:bg-navy/5 cursor-pointer transition-colors">
+                                     <input type="checkbox" className="w-4 h-4 rounded text-gold focus:ring-gold accent-gold" />
+                                     <span className="text-sm font-bold text-navy">Ponchos / Rain Gear</span>
+                                  </label>
+                               </div>
+                            </div>
+                            
+                            {/* Category: Apparel */}
+                            <div>
+                               <h4 className="text-sm font-bold text-navy mb-3 flex items-center gap-2 border-b border-navy/5 pb-2"><Cloud size={14} className="text-navy/40" /> Apparel & Footwear</h4>
+                               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                  <label className="flex items-center gap-3 p-3 rounded-xl border border-navy/10 hover:bg-navy/5 cursor-pointer transition-colors">
+                                     <input type="checkbox" className="w-4 h-4 rounded text-gold focus:ring-gold accent-gold" />
+                                     <span className="text-sm font-bold text-navy">Comfortable Walking Shoes (x2)</span>
+                                  </label>
+                                  <label className="flex items-center gap-3 p-3 rounded-xl border border-navy/10 hover:bg-navy/5 cursor-pointer transition-colors">
+                                     <input type="checkbox" className="w-4 h-4 rounded text-gold focus:ring-gold accent-gold" />
+                                     <div className="flex-1">
+                                        <span className="text-sm font-bold text-navy block">Light Jackets</span>
+                                        <span className="text-[10px] text-navy/40 uppercase font-black tracking-widest block mt-0.5">AI: Forecast shows cool evenings</span>
+                                     </div>
+                                  </label>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+
+                   <div className="lg:col-span-4 flex flex-col gap-6">
+                      <div className="luxury-card p-6 bg-gradient-to-br from-blue-50 to-blue-100/50 border border-blue-100 shadow-sm relative overflow-hidden">
+                         <div className="absolute top-0 right-0 w-32 h-32 bg-blue-200/50 rounded-full blur-2xl -mt-16 -mr-16 pointer-events-none"></div>
+                         <h3 className="text-xl font-header text-navy flex items-center gap-2 mb-4 relative z-10"><CloudRain size={18} className="text-blue-500" /> Trip Weather Focus</h3>
+                         
+                         <div className="flex items-center justify-between bg-white/60 p-4 rounded-2xl mb-4 relative z-10 border border-blue-50">
+                            <div className="flex items-center gap-4">
+                               <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl">
+                                  <CloudRain size={24} />
+                               </div>
+                               <div>
+                                  <span className="text-2xl font-header block leading-none">78° / 65°</span>
+                                  <span className="text-[10px] uppercase font-black tracking-widest text-navy/40 mt-1 block">Expected Avg</span>
+                               </div>
+                            </div>
+                         </div>
+                         <p className="text-xs text-navy/70 leading-relaxed italic relative z-10">AI Insights: "Expect warm afternoons but the chance of afternoon thunderstorms is high. Pack ponchos and waterproof shoes."</p>
+                      </div>
+
+                      <div className="luxury-card p-6 bg-white border border-navy/5 shadow-sm">
+                         <h3 className="text-xl font-header text-navy flex items-center gap-2 mb-4"><Sparkles size={18} className="text-gold" /> Contextual Items</h3>
+                         <ul className="space-y-4">
+                            <li className="flex items-start gap-3">
+                               <div className="w-6 h-6 rounded bg-rose/10 text-rose flex items-center justify-center shrink-0 mt-0.5"><Utensils size={12}/></div>
+                               <div>
+                                  <span className="text-xs font-bold text-navy block">Dress Code: Signature Dining</span>
+                                  <span className="text-[10px] text-navy/50 block mt-0.5">You have reservations at Victoria & Albert's. Proper attire required.</span>
+                               </div>
+                            </li>
+                            <li className="flex items-start gap-3">
+                               <div className="w-6 h-6 rounded bg-purple-100 text-purple-600 flex items-center justify-center shrink-0 mt-0.5"><History size={12}/></div>
+                               <div>
+                                  <span className="text-xs font-bold text-navy block">Halloween Party Costumes</span>
+                                  <span className="text-[10px] text-navy/50 block mt-0.5">Mickey's Not-So-Scary on Oct 29.</span>
+                               </div>
+                            </li>
+                         </ul>
+                      </div>
+                   </div>
+                </div>
+              </div>
+            )
+          }
+
+          {/* 8. DIGITAL KEEPSAKE VIEW */}
+          {
+            activeView === 'keepsake' && (
+              <div className="view-keepsake animate-in fade-in zoom-in-95 duration-500">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
+                  <div>
+                     <h2 className="text-4xl font-header mb-2 text-navy flex items-center gap-3"><Camera className="text-gold" /> The Digital Keepsake</h2>
+                     <p className="opacity-60">Relive your magical memories, stats, and hidden secrets uncovered during your journey.</p>
+                  </div>
+                  <div className="flex gap-3">
+                     <select title="Trip Selection" className="bg-white border border-navy/10 rounded-xl px-4 py-2 font-bold text-sm text-navy outline-none focus:border-gold">
+                        <option>Summer Vacation 2025</option>
+                        <option>Halloween Trip 2024</option>
+                     </select>
+                     <button title="Share Keepsake" className="btn-primary-mini flex items-center gap-2 pr-5"><Share2 size={14} /> Share</button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                   {/* Left Col: Day-in-Review Reel & Next-Trip Bridge */}
+                   <div className="lg:col-span-8 flex flex-col gap-8">
+                      {/* The Reel */}
+                      <div className="luxury-card p-0 overflow-hidden relative border border-navy/5 shadow-md group">
+                         {/* Reel Header */}
+                         <div className="p-8 bg-navy text-white relative z-10">
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-gold/10 rounded-full blur-3xl -mt-32 -mr-32 pointer-events-none"></div>
+                            <div className="flex justify-between items-start mb-6">
+                               <div>
+                                  <span className="text-[10px] font-black uppercase tracking-widest text-gold block mb-1">Day-in-Review Reel</span>
+                                  <h3 className="text-2xl font-header">Magic Kingdom Memories</h3>
+                               </div>
+                               <button title="Play Reel" className="w-10 h-10 rounded-full bg-white text-navy flex items-center justify-center hover:scale-110 transition-transform shadow-lg">
+                                  <Play fill="currentColor" size={16} className="ml-1" />
+                               </button>
+                            </div>
+                            
+                            {/* Metric Milestones */}
+                            <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10">
+                               <div>
+                                  <span className="text-[10px] font-black uppercase tracking-widest text-white/40 block mb-1">Distance Walked</span>
+                                  <span className="font-header text-2xl text-white">14.2 <span className="text-[10px] opacity-60 flex-0 font-sans tracking-widest">MILES</span></span>
+                               </div>
+                               <div>
+                                  <span className="text-[10px] font-black uppercase tracking-widest text-white/40 block mb-1">Time Saved</span>
+                                  <span className="font-header text-2xl text-teal-400">4.5 <span className="text-[10px] opacity-60 flex-0 font-sans tracking-widest text-white">HOURS</span></span>
+                               </div>
+                               <div>
+                                  <span className="text-[10px] font-black uppercase tracking-widest text-white/40 block mb-1">Hidden Mickeys</span>
+                                  <span className="font-header text-2xl text-gold">12 <span className="text-[10px] opacity-60 flex-0 font-sans tracking-widest text-white">FOUND</span></span>
+                               </div>
+                            </div>
+                         </div>
+                         
+                         {/* Reel Timeline */}
+                         <div className="p-8 bg-white relative">
+                            <div className="absolute left-10 top-8 bottom-8 w-px bg-navy/10 pointer-events-none"></div>
+                            
+                            <div className="space-y-8 relative z-10">
+                               <div className="flex gap-6">
+                                  <div className="w-5 h-5 rounded-full bg-navy border-4 border-white mt-1 shrink-0 relative z-10"></div>
+                                  <div className="flex-1">
+                                     <span className="text-[10px] font-black uppercase tracking-widest text-navy/40 mb-1 block">8:45 AM</span>
+                                     <h4 className="font-bold text-navy mb-2">Rope Drop at Seven Dwarfs Mine Train</h4>
+                                     <div className="h-32 w-full max-w-sm rounded-xl bg-navy/5 border border-navy/10 overflow-hidden flex items-center justify-center mb-3">
+                                        <Image size={24} className="text-navy/20" />
+                                     </div>
+                                     <p className="text-xs text-navy/60 leading-relaxed italic border-l-2 border-navy/20 pl-3">"You beat the rush and saved 65 minutes in line first thing in the morning!"</p>
+                                  </div>
+                               </div>
+                               
+                               <div className="flex gap-6">
+                                  <div className="w-5 h-5 rounded-full bg-gold border-4 border-white mt-1 shrink-0 relative z-10"></div>
+                                  <div className="flex-1">
+                                     <span className="text-[10px] font-black uppercase tracking-widest text-navy/40 mb-1 block">1:15 PM</span>
+                                     <h4 className="font-bold text-navy mb-2">Lunch at Be Our Guest</h4>
+                                     <div className="grid grid-cols-2 gap-3 max-w-sm mb-3">
+                                        <div className="h-24 rounded-xl bg-navy/5 border border-navy/10 flex items-center justify-center"><Utensils size={20} className="text-navy/20" /></div>
+                                        <div className="h-24 rounded-xl bg-navy/5 border border-navy/10 flex items-center justify-center"><Camera size={20} className="text-navy/20" /></div>
+                                     </div>
+                                     <p className="text-xs text-navy/60 leading-relaxed italic border-l-2 border-navy/20 pl-3">"The Grey Stuff was indeed delicious."</p>
+                                  </div>
+                               </div>
+                               
+                               <div className="flex gap-6">
+                                  <div className="w-5 h-5 rounded-full bg-rose border-4 border-white mt-1 shrink-0 relative z-10"></div>
+                                  <div className="flex-1">
+                                     <span className="text-[10px] font-black uppercase tracking-widest text-navy/40 mb-1 block">9:00 PM</span>
+                                     <h4 className="font-bold text-navy mb-2">Happily Ever After</h4>
+                                     <div className="h-40 w-full max-w-sm rounded-xl bg-gradient-to-t from-navy/80 to-navy/40 flex items-end p-4 border border-navy/10 relative overflow-hidden">
+                                        <Sparkles size={24} className="text-gold absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20" />
+                                        <span className="text-[10px] font-black uppercase tracking-widest text-white/80 relative z-10">Video Clip (0:15)</span>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+
+                      {/* Next-Trip Bridge (Memory Vault) */}
+                      <div className="luxury-card p-8 border border-navy/5 shadow-sm bg-gradient-to-r from-[#F9F7F2] to-white relative overflow-hidden">
+                         <div className="flex items-start gap-6 relative z-10">
+                            <div className="w-16 h-16 rounded-2xl bg-gold/10 text-gold flex items-center justify-center shrink-0">
+                               <Compass size={28} />
+                            </div>
+                            <div>
+                               <h3 className="text-xl font-header text-navy mb-2">The Memory Vault</h3>
+                               <p className="text-sm text-navy/60 mb-4">We've securely saved your "Favorites" to prioritize for your next visit.</p>
+                               <div className="flex flex-wrap gap-2">
+                                  <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg bg-white border border-navy/10 flex items-center gap-1.5"><Heart size={10} className="text-rose fill-rose" /> Blue Bayou Water Table</span>
+                                  <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg bg-white border border-navy/10 flex items-center gap-1.5"><Heart size={10} className="text-rose fill-rose" /> Cosmic Rewind (Front Row)</span>
+                                  <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg bg-white border border-navy/10 flex items-center gap-1.5"><Heart size={10} className="text-rose fill-rose" /> Sleepy Hollow Waffles</span>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+
+                   {/* Right Col: Sovereign Scrapbook */}
+                   <div className="lg:col-span-4">
+                      <div className="luxury-card h-full p-8 border border-gold/20 shadow-xl bg-[#F9F7F2] relative overflow-hidden group">
+                         {/* Texture overlay for Parchment feel */}
+                         
+                         <div className="relative z-10 flex flex-col h-full">
+                            <div className="text-center mb-8 pb-6 border-b border-navy/10 relative">
+                               <Sparkles size={16} className="text-gold absolute -top-2 right-4 animate-pulse" />
+                               <span className="text-[10px] font-black uppercase tracking-[4px] text-navy/40 block mb-2">Heirloom Edition</span>
+                               <h3 className="text-3xl font-header text-navy" style={{ fontFamily: 'Georgia, serif' }}>Sovereign<br />Scrapbook</h3>
+                            </div>
+
+                            <p className="text-xs text-navy/60 text-center leading-relaxed italic mb-8 font-serif px-4">
+                               "A boutique collection framing your memories as digital stationery. Beautifully aged, perfectly preserved."
+                            </p>
+
+                            <div className="grid grid-cols-2 gap-3 mb-8">
+                               <div className="aspect-[3/4] rounded shadow-md border-4 border-white bg-navy/10 rotate-[-2deg] flex items-center justify-center hover:rotate-0 transition-transform cursor-pointer hover:shadow-lg hover:z-10 bg-gradient-to-br from-navy/5 to-navy/10"><Image size={24} className="text-navy/20" /></div>
+                               <div className="aspect-square rounded shadow-md border-4 border-white bg-navy/10 rotate-[3deg] flex items-center justify-center hover:rotate-0 transition-transform cursor-pointer hover:shadow-lg hover:z-10 mt-6 bg-gradient-to-bl from-navy/5 to-navy/10"><Image size={24} className="text-navy/20" /></div>
+                               <div className="col-span-2 aspect-video rounded shadow-md border-4 border-white bg-navy/10 flex items-center justify-center -mt-2 hover:scale-[1.02] transition-transform cursor-pointer hover:shadow-lg bg-gradient-to-t from-navy/5 to-navy/10"><Image size={24} className="text-navy/20" /></div>
+                            </div>
+
+                            {/* The Secret Log */}
+                            <div className="mt-auto bg-white/50 backdrop-blur-sm p-5 rounded-xl border border-navy/10">
+                               <h4 className="font-header text-sm text-navy mb-3 flex items-center gap-2"><Key size={14} className="text-gold" /> The Secret Log</h4>
+                               <div className="space-y-3">
+                                  <div className="text-left text-xs text-navy/70 leading-relaxed border-l-2 border-gold pl-3 italic font-serif">
+                                     Discovered the hidden passage behind the Main Street Cinema at 10:14 AM.
+                                  </div>
+                                  <div className="text-left text-xs text-navy/70 leading-relaxed border-l-2 border-gold pl-3 italic font-serif">
+                                     Triggered the "Galactic Hero" tier on Buzz Lightyear's Space Ranger Spin.
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+              </div>
+            )
+          }
+
+          {/* 8.5 SUBSCRIPTION CHECKOUT VIEW */}
+          {
+            activeView === 'subscription' && (
+              <div className="view-subscription animate-in fade-in zoom-in-95 duration-500">
+                <div className="text-center max-w-3xl mx-auto mb-16">
+                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gold/10 text-gold mb-6 border-2 border-gold/20 shadow-lg">
+                      <Crown size={32} />
+                   </div>
+                   <h2 className="text-4xl lg:text-5xl font-header mb-4 text-navy">Upgrade to Citadel</h2>
+                   <p className="text-lg opacity-60 text-navy/80 font-light">Unlock the full power of the Plaid AI Engine. Get real-time crowd predictions, automated dining snipers, and premium team collaboration.</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                   
+                   {/* Standard Plan */}
+                   <div className="luxury-card p-10 bg-white border border-navy/5 shadow-sm text-left relative group hover:border-navy/20 transition-all flex flex-col">
+                      <h3 className="text-2xl font-header text-navy mb-2">Explorer</h3>
+                      <div className="flex items-baseline gap-1 mb-6">
+                         <span className="text-4xl font-black text-navy">$0</span>
+                         <span className="text-sm font-bold text-navy/40 uppercase tracking-widest">/ forever</span>
+                      </div>
+                      <p className="text-sm text-navy/60 mb-8 font-light">Perfect for casual planning and standard itinerary management.</p>
+                      <ul className="space-y-4 mb-8 flex-1">
+                         <li className="flex items-start gap-3 text-sm text-navy/80">
+                            <Check size={18} className="text-emerald-500 shrink-0 mt-0.5" />
+                            <span>1 Active Adventure at a time</span>
+                         </li>
+                         <li className="flex items-start gap-3 text-sm text-navy/80">
+                            <Check size={18} className="text-emerald-500 shrink-0 mt-0.5" />
+                            <span>Basic AI Itinerary Generation</span>
+                         </li>
+                         <li className="flex items-start gap-3 text-sm text-navy/80">
+                            <Check size={18} className="text-emerald-500 shrink-0 mt-0.5" />
+                            <span>Up to 4 Co-Planners</span>
+                         </li>
+                         <li className="flex items-start gap-3 text-sm text-navy/40">
+                            <X size={18} className="text-navy/20 shrink-0 mt-0.5" />
+                            <span className="line-through">Automated Dining Snipers</span>
+                         </li>
+                      </ul>
+                      <button className="w-full bg-navy/5 text-navy font-bold py-3 rounded-xl hover:bg-navy/10 transition-colors uppercase tracking-widest text-[10px]">Current Plan</button>
+                   </div>
+
+                   {/* Premium Plan */}
+                   <div className="luxury-card p-10 bg-gradient-to-br from-navy to-[#1a3345] text-white border border-gold/30 shadow-2xl relative flex flex-col overflow-hidden transform md:-translate-y-4">
+                      {/* Stylistic bg glow */}
+                      <div className="absolute top-0 right-0 w-64 h-64 bg-gold/10 rounded-full blur-3xl -mt-32 -mr-32 pointer-events-none"></div>
+                      
+                      <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-gold-light via-gold to-gold-dark"></div>
+                      <div className="absolute top-4 right-4 bg-gold/20 border border-gold/50 text-gold px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">Most Popular</div>
+                      
+                      <h3 className="text-2xl font-header text-white mb-2 flex items-center gap-2"><Crown size={20} className="text-gold" /> Citadel</h3>
+                      <div className="flex items-baseline gap-1 mb-6">
+                         <span className="text-4xl font-black text-white">$12</span>
+                         <span className="text-sm font-bold text-white/40 uppercase tracking-widest">/ month</span>
+                      </div>
+                      <p className="text-sm text-white/60 mb-8 font-light border-b border-white/10 pb-6">The ultimate VIP trip planning experience with total AI integration.</p>
+                      
+                      <ul className="space-y-4 mb-8 flex-1">
+                         <li className="flex items-start gap-3 text-sm text-white/90">
+                            <Check size={18} className="text-gold shrink-0 mt-0.5" />
+                            <span><strong>Unlimited</strong> Active Adventures</span>
+                         </li>
+                         <li className="flex items-start gap-3 text-sm text-white/90">
+                            <Check size={18} className="text-gold shrink-0 mt-0.5" />
+                            <span>Advanced Plaid AI Context Engine</span>
+                         </li>
+                         <li className="flex items-start gap-3 text-sm text-white/90">
+                            <Check size={18} className="text-gold shrink-0 mt-0.5" />
+                            <span>Automated Dining Reservation Snipers</span>
+                         </li>
+                         <li className="flex items-start gap-3 text-sm text-white/90">
+                            <Check size={18} className="text-gold shrink-0 mt-0.5" />
+                            <span>Smart Packing Lists & Weather Intel</span>
+                         </li>
+                         <li className="flex items-start gap-3 text-sm text-white/90">
+                            <Check size={18} className="text-gold shrink-0 mt-0.5" />
+                            <span>Digital Keepsakes & Memory Vaults</span>
+                         </li>
+                      </ul>
+                      
+                      <button className="w-full bg-gold hover:bg-gold-light text-navy font-black py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(201,169,103,0.3)] hover:shadow-[0_0_30px_rgba(201,169,103,0.5)] transform hover:-translate-y-1 uppercase tracking-widest text-[11px] flex items-center justify-center gap-2">
+                         <Lock size={14} /> Upgrade Now
+                      </button>
+                      <p className="text-center text-[10px] text-white/40 mt-4 font-bold uppercase tracking-widest">Cancel Anytime. Secure Checkout.</p>
+                   </div>
+                   
+                </div>
+              </div>
+            )
+          }
+
+          {/* 9. TRIP CREATION WIZARD */}
           {
             activeView === 'new_trip' && (
               <div className="flex flex-row -mx-12 -mt-12 min-h-[calc(100vh-90px)] bg-white ring-1 ring-navy/5">

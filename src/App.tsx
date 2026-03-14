@@ -2049,11 +2049,28 @@ function App() {
                   <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><Calendar className="text-gold" /> Crowd Calendar</h2>
                   <p className="opacity-60">Plan your trip around historical crowd levels, events, and seasonal pricing.</p>
                 </div>
-                <div className="flex flex-wrap gap-4 bg-white px-4 py-3 rounded-2xl border border-navy/5 shadow-sm">
-                   <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-navy/60"><div className="w-3 h-3 rounded-full bg-emerald-100 border border-emerald-300"></div> Low</div>
-                   <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-navy/60"><div className="w-3 h-3 rounded-full bg-amber-100 border border-amber-300"></div> Moderate</div>
-                   <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-navy/60"><div className="w-3 h-3 rounded-full bg-rose/10 border border-rose/20"></div> High</div>
-                   <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-navy/60"><div className="w-3 h-3 rounded-full bg-purple-100 border border-purple-300"></div> Peak</div>
+                
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-4 w-full md:w-auto">
+                   {/* Context Filter */}
+                   <div className="relative w-full md:w-48">
+                      <select title="Park Context" className="w-full bg-white border border-navy/10 rounded-xl py-2 pl-4 pr-10 text-xs font-bold text-navy appearance-none outline-none focus:border-gold transition-colors cursor-pointer shadow-sm">
+                         <option value="all" className="text-navy">All Walt Disney World</option>
+                         <option value="mk" className="text-navy">Magic Kingdom Park</option>
+                         <option value="ep" className="text-navy">Epcot</option>
+                         <option value="hs" className="text-navy">Disney's Hollywood Studios</option>
+                         <option value="ak" className="text-navy">Disney's Animal Kingdom</option>
+                         <option value="dlr" className="text-navy">Disneyland Resort (CA)</option>
+                      </select>
+                      <ChevronDown size={12} className="absolute right-4 top-1/2 -translate-y-1/2 text-navy/40 pointer-events-none" />
+                   </div>
+
+                   {/* Legend */}
+                   <div className="flex flex-wrap gap-4 bg-white px-4 py-2 rounded-2xl border border-navy/5 shadow-sm">
+                      <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-navy/60"><div className="w-3 h-3 rounded-full bg-emerald-100 border border-emerald-300"></div> Low</div>
+                      <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-navy/60"><div className="w-3 h-3 rounded-full bg-amber-100 border border-amber-300"></div> Moderate</div>
+                      <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-navy/60"><div className="w-3 h-3 rounded-full bg-rose/10 border border-rose/20"></div> High</div>
+                      <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-navy/60"><div className="w-3 h-3 rounded-full bg-purple-100 border border-purple-300"></div> Peak</div>
+                   </div>
                 </div>
               </div>
 
@@ -2344,10 +2361,8 @@ function App() {
                 >
                    <div 
                      className="absolute inset-0 transition-transform duration-75 origin-center will-change-transform"
-                     style={{ transform: `translate(${mapPan.x}px, ${mapPan.y}px) scale(${mapZoom})` }}
                    >
-                     <img src="https://alittledisneymagic.files.wordpress.com/2012/12/mk-1212.jpg" alt="Disney Map Mock" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] max-w-none object-cover opacity-80 pointer-events-none" />
-                     
+                     <img src="https://media.disneywebassets.com/dam/wdpro-assets/parks-and-tickets/destinations/magic-kingdom/magic-kingdom-map-16x9.jpg" alt="Disney Map Mock" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] max-w-none object-cover opacity-80 pointer-events-none" />
                      {/* Map Overlays Mock */}
                      <div className="absolute top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2">
                         <div className="relative group cursor-pointer" onClick={(e) => e.stopPropagation()}>
@@ -2758,9 +2773,9 @@ function App() {
             activeView === 'settings' && (
                <div className="view-settings animate-in fade-in zoom-in-95 duration-500 max-w-5xl mx-auto">
                   <div className="flex justify-between items-end mb-10">
-                    <div className="text-left">
+                    <div className="text-left text-navy">
                        <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><Settings className="text-gold" /> System Preferences</h2>
-                       <p className="opacity-60">Manage your profile, application settings, and subscription details.</p>
+                       <p className="opacity-60 text-navy">Manage your profile, application settings, and subscription details.</p>
                     </div>
                   </div>
                   
@@ -2776,8 +2791,8 @@ function App() {
                      
                      <div className="md:col-span-3">
                         {activeSettingsTab === 'profile' && (
-                           <div className="luxury-card p-8 text-left animate-in fade-in">
-                              <h3 className="font-header text-2xl mb-6">Profile Settings</h3>
+                           <div className="luxury-card p-8 bg-white border border-navy/5 text-left animate-in fade-in">
+                              <h3 className="font-header text-2xl text-navy mb-6">Profile Settings</h3>
                               <div className="flex items-center gap-6 mb-8 pb-8 border-b border-navy/10">
                                  <div className="w-20 h-20 rounded-full bg-gold/20 flex items-center justify-center text-gold text-2xl font-header">P</div>
                                  <div>
@@ -2804,8 +2819,8 @@ function App() {
                         )}
 
                         {activeSettingsTab === 'preferences' && (
-                           <div className="luxury-card p-8 text-left animate-in fade-in">
-                              <h3 className="font-header text-2xl mb-6">System Preferences</h3>
+                           <div className="luxury-card p-8 bg-white border border-navy/5 text-left animate-in fade-in">
+                              <h3 className="font-header text-2xl text-navy mb-6">System Preferences</h3>
                               <div className="space-y-6">
                                  <div className="flex justify-between items-center pb-6 border-b border-navy/5">
                                     <div>
@@ -2873,8 +2888,8 @@ function App() {
                                  </div>
                               </div>
 
-                              <div className="luxury-card p-8 border border-navy/5 text-left">
-                                 <h3 className="font-header text-xl mb-6">Billing History</h3>
+                              <div className="luxury-card p-8 border border-navy/5 text-left bg-white">
+                                 <h3 className="font-header text-xl text-navy mb-6">Billing History</h3>
                                  <table className="w-full text-sm">
                                     <thead>
                                        <tr className="text-[10px] font-black uppercase tracking-widest text-navy/40 border-b border-navy/5">

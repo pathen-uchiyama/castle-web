@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Lock, Sparkles, ShieldCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -10,16 +10,11 @@ const AlphaGate: React.FC<AlphaGateProps> = ({ children }) => {
   const [accessCode, setAccessCode] = useState('');
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
   // Check for existing authorization in session
-  useEffect(() => {
-    const authStatus = sessionStorage.getItem('alpha_access_granted');
-    if (authStatus === 'true') {
-      setIsAuthorized(true);
-    }
-    setIsLoading(false);
-  }, []);
+  const [isAuthorized, setIsAuthorized] = useState(() => {
+    return sessionStorage.getItem('alpha_access_granted') === 'true';
+  });
+  const [isLoading] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

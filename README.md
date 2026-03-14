@@ -1,73 +1,50 @@
-# React + TypeScript + Vite
+# Castle Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the Castle Web frontend application. This is a React + TypeScript + Vite project designed as the pre-trip planning web app for the Castle system.
 
-Currently, two official plugins are available:
+## Setup & Development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To get started with local development:
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+To build for production:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
 ```
+
+## Vercel Deployment
+
+This project is configured to be deployed on **Vercel**. 
+
+### Step-by-Step Deployment Guide
+
+1. **GitHub Integration**: Ensure your latest code is pushed to the `main` branch of your GitHub repository.
+2. **Import Project**: Log in to [Vercel](https://vercel.com) and click **Add New...** > **Project**.
+3. **Select Repository**: Choose the `castle-web` repository from your linked GitHub account.
+4. **Configure Build Settings**:
+   - **Framework Preset**: Vercel should automatically detect **Vite**. If not, select it manually.
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+   - **Install Command**: `npm install`
+5. **Environment Variables**: Add any necessary environment variables (e.g., Supabase credentials) in the Vercel project settings under **Settings > Environment Variables**.
+6. **Deploy**: Click **Deploy**! Vercel will build the project and assign a live URL.
+
+### Troubleshooting Builds
+
+If the Vercel build fails due to TypeScript or ESLint errors, you can run the exact commands locally to catch them beforehand:
+
+```bash
+npm run tsc
+npm run lint
+```
+
+Ensure these pass with `0 errors` before pushing to `main`. 
+
+---
+
+_Powered by Vite & React._

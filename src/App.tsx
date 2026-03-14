@@ -1,61 +1,20 @@
-import { useState, useRef, useEffect } from 'react';
-import {
-  Shield,
-  Users,
-  CreditCard,
-  AlertTriangle,
-  CheckCircle,
-  Clock,
-  ArrowRight,
-  Plus,
-  Zap,
-  Coffee,
-  Heart,
-  Settings,
-  Target,
-  UserPlus,
-  LayoutDashboard,
-  History,
-  ShieldCheck,
-  Compass,
-  LogOut,
-  ChevronRight,
-  CloudRain,
-
-  Calendar,
-  Map,
-  Sparkles,
-  Utensils,
-  Mail,
-  Send,
-  Star,
-  Crown,
-  Rocket,
-  BookOpen,
-  MapPin,
-  Activity,
-  Ruler,
-  Info,
-  X,
-  Volume2,
-  Accessibility,
-  RefreshCw,
-  Moon
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import AlphaGate from './components/gatekeeping/AlphaGate';
+import { 
+  LayoutDashboard, Users, Calendar, Map, Utensils, Info, CheckCircle, ChevronRight, X, User, Plus, Filter, Search, Star, Clock, MapPin, AlertTriangle, ShieldCheck, Zap, Activity, BookOpen, Globe, Droplets, Volume2, Sparkles, Wand2, Compass, Layers, PieChart, Settings, LogOut, Bell, Menu, ChevronDown, ChevronUp, Edit2, Trash2, Save, ArrowLeft, Download, Share2, Heart, MessageSquare, Coffee, Camera, FastForward, Play, Pause, Repeat, SkipForward, SkipBack, Maximize2, Minimize2, ExternalLink, HelpCircle, Briefcase, Award, Smile, Frown, Meh, Eye, EyeOff, Lock, Unlock, Key, Trash, RefreshCw, Send, Check, Paperclip, Mail, Phone, Home, ShoppingBag, CreditCard, Gift, Music, Film, Video, Image, Mic, Speaker, Headphones, Bluetooth, Wifi, Battery, Cloud, Sun, Moon, Wind, Thermometer, Umbrella, Sunrise, Sunset 
 } from 'lucide-react';
 
-type View = 'home' | 'trip_dashboard' | 'vault' | 'crew' | 'new_trip' | 'guest_survey' | 'account_setup';
+// ── Types ───────────────────────────────────────────────────────────────────
+type View = 'home' | 'crew' | 'trip_dashboard' | 'guest_survey';
 
 interface GuestContent {
-  id: number;
+  id: number | string;
   name: string;
   age: number;
   height: number;
   allergies: string;
   email: string;
-  surveyCompleted?: boolean;
-  strobeSensitivity?: boolean;
-  loudNoiseSensitivity?: boolean;
-  dasEligible?: boolean;
+  surveyCompleted: boolean;
   surveyPreferences?: {
     wantIds: string[];
     skipIds: string[];
@@ -67,10 +26,10 @@ interface GuestContent {
 interface Adventure {
   id: string;
   name: string;
-  resortId: 'WDW' | 'DL';
+  resortId: string;
   startDate: string;
   endDate: string;
-  status: 'planning' | 'active' | 'past';
+  status: 'planning' | 'past' | 'live';
   onSite: boolean;
   hotelName?: string;
   parks: string[];
@@ -79,14 +38,6 @@ interface Adventure {
   pacing: 'intense' | 'moderate' | 'relaxed';
   primaryFocus: 'thrills' | 'toddlers' | 'classic' | 'shows';
   diningStrategy: 'snacks' | 'quick' | 'table' | 'signature';
-  singleRiderAllowed?: boolean;
-  dasAllowed?: boolean;
-  llMultiPassAllowed?: boolean;
-  llSinglePassAllowed?: boolean;
-  arrivalIntent?: 'rope-drop' | 'leisurely' | 'evening-only';
-  splurgeAppetite?: 'low' | 'moderate' | 'high';
-  premiumInterests?: string[];
-  diningReservationIntent?: boolean;
 }
 
 function App() {
@@ -611,7 +562,8 @@ function App() {
   };
 
   return (
-    <div className={`dashboard-layout ${(activeView === 'guest_survey' || activeView === 'account_setup') ? 'guest-survey-mode' : ''}`}>
+    <AlphaGate>
+      <div className={`dashboard-layout ${(activeView === 'guest_survey' || activeView === 'account_setup') ? 'guest-survey-mode' : ''}`}>
       {/* Sidebar - Hide if survey mode or account setup */}
       {activeView !== 'guest_survey' && activeView !== 'account_setup' && (
         <aside className="sidebar">
@@ -3550,6 +3502,7 @@ function App() {
       )}
 
     </div >
+    </AlphaGate>
   );
 }
 

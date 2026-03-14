@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 
 // ── Types ───────────────────────────────────────────────────────────────────
-type View = 'home' | 'crew' | 'trip_dashboard' | 'guest_survey';
+type View = 'home' | 'crew' | 'trip_dashboard' | 'guest_survey' | 'vault' | 'new_trip' | 'account_setup';
 
 interface GuestContent {
   id: number | string;
@@ -41,6 +41,14 @@ interface Adventure {
   pacing: 'intense' | 'moderate' | 'relaxed';
   primaryFocus: 'thrills' | 'toddlers' | 'classic' | 'shows';
   diningStrategy: 'snacks' | 'quick' | 'table' | 'signature';
+  singleRiderAllowed?: boolean;
+  dasAllowed?: boolean;
+  llMultiPassAllowed?: boolean;
+  llSinglePassAllowed?: boolean;
+  arrivalIntent?: 'leisurely' | 'rope-drop' | 'evening-only';
+  splurgeAppetite?: 'moderate' | 'low' | 'high';
+  premiumInterests?: string[];
+  diningReservationIntent?: boolean;
 }
 
 function App() {
@@ -559,7 +567,7 @@ function App() {
     setMembers(prev => {
       const exists = prev.find(m => m.name === setupData.plannerName);
       if (exists) return prev;
-      return [...prev, { id: Date.now(), name: setupData.plannerName, age: 30, height: 70, allergies: 'None', email: '' }];
+      return [...prev, { id: Date.now(), name: setupData.plannerName, age: 30, height: 70, allergies: 'None', email: '', surveyCompleted: false }];
     });
     setSetupStep(1);
     setActiveView('home');
@@ -1470,7 +1478,7 @@ function App() {
                                 {/* travelTime intentionally suppressed — walk time is computed dynamically */}
                               </div>
                               <div className="flex flex-col gap-3 mt-4">
-                                {(item.dasEligible || (item as Record<string, unknown>).singleRider || (item as Record<string, unknown>).childSwap || (item as Record<string, unknown>).earlyMorningAccess) && (
+                                {(item.dasEligible || Boolean((item as Record<string, unknown>).singleRider) || Boolean((item as Record<string, unknown>).childSwap) || Boolean((item as Record<string, unknown>).earlyMorningAccess)) && (
                                   <div>
                                     <span className="text-[7px] uppercase font-black text-white/30 block mb-1.5 tracking-[2px]">Rules & Options</span>
                                     <div className="flex flex-wrap gap-1.5">
@@ -1479,17 +1487,17 @@ function App() {
                                           <Accessibility size={10} /> DAS
                                         </div>
                                       )}
-                                      {(item as Record<string, unknown>).earlyMorningAccess && (
+                                      {Boolean((item as Record<string, unknown>).earlyMorningAccess) && (
                                         <div className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-orange-500/15 border border-orange-400/30 text-[9px] text-orange-300 font-black uppercase tracking-widest" title="Early Morning Entry Available">
                                           <Crown size={10} /> Early Morning Access
                                         </div>
                                       )}
-                                      {(item as Record<string, unknown>).singleRider && (
+                                      {Boolean((item as Record<string, unknown>).singleRider) && (
                                         <div className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-purple-500/15 border border-purple-400/30 text-[9px] text-purple-300 font-black uppercase tracking-widest" title="Single Rider Line Available">
                                           <Users size={10} /> Single Rider
                                         </div>
                                       )}
-                                      {(item as Record<string, unknown>).childSwap && (
+                                      {Boolean((item as Record<string, unknown>).childSwap) && (
                                         <div className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-sky-500/15 border border-sky-400/30 text-[9px] text-sky-300 font-black uppercase tracking-widest" title="Child Switch / Rider Swap Available">
                                           <RefreshCw size={10} /> Child Switch
                                         </div>
@@ -3063,14 +3071,14 @@ function App() {
                           </div>
 
                           <div className="flex flex-col gap-3">
-                            {(surveyDetailItem.dasEligible || (surveyDetailItem as Record<string, unknown>).singleRider || (surveyDetailItem as Record<string, unknown>).childSwap || (surveyDetailItem as Record<string, unknown>).earlyMorningAccess) && (
+                            {(surveyDetailItem.dasEligible || Boolean((surveyDetailItem as Record<string, unknown>).singleRider) || Boolean((surveyDetailItem as Record<string, unknown>).childSwap) || Boolean((surveyDetailItem as Record<string, unknown>).earlyMorningAccess)) && (
                               <div>
                                 <span className="text-[8px] uppercase font-black text-white/30 block mb-1 tracking-[2px]">Rules & Options</span>
                                 <div className="flex flex-wrap gap-1.5">
                                   {surveyDetailItem.dasEligible && <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-teal/20 text-teal border border-teal/30">DAS</span>}
-                                  {(surveyDetailItem as Record<string, unknown>).earlyMorningAccess && <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-300 border border-orange-400/30">Early Morning Access</span>}
-                                  {(surveyDetailItem as Record<string, unknown>).singleRider && <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-400/30">Single Rider</span>}
-                                  {(surveyDetailItem as Record<string, unknown>).childSwap && <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30">Child Switch</span>}
+                                  {Boolean((surveyDetailItem as Record<string, unknown>).earlyMorningAccess) && <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-300 border border-orange-400/30">Early Morning Access</span>}
+                                  {Boolean((surveyDetailItem as Record<string, unknown>).singleRider) && <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-400/30">Single Rider</span>}
+                                  {Boolean((surveyDetailItem as Record<string, unknown>).childSwap) && <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30">Child Switch</span>}
                                 </div>
                               </div>
                             )}
@@ -3315,7 +3323,7 @@ function App() {
               </div>
 
               <div className="flex flex-col gap-4 mb-6">
-                {(selectedActivityForDetails.dasEligible || (selectedActivityForDetails as Record<string, unknown>).singleRider || (selectedActivityForDetails as Record<string, unknown>).childSwap || selectedActivityForDetails.earlyMorningAccess) && (
+                {(selectedActivityForDetails.dasEligible || Boolean((selectedActivityForDetails as Record<string, unknown>).singleRider) || Boolean((selectedActivityForDetails as Record<string, unknown>).childSwap) || selectedActivityForDetails.earlyMorningAccess) && (
                   <div>
                     <span className="text-[9px] uppercase font-black text-white/30 block mb-2 tracking-[2px]">Rules & Options</span>
                     <div className="flex flex-wrap gap-2">
@@ -3329,12 +3337,12 @@ function App() {
                           <Crown size={12} /> Early Morning Access
                         </div>
                       )}
-                      {(selectedActivityForDetails as Record<string, unknown>).singleRider && (
+                      {Boolean((selectedActivityForDetails as Record<string, unknown>).singleRider) && (
                         <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-purple-500/10 border border-purple-400/20 text-[10px] text-purple-300 font-black uppercase tracking-widest">
                           <Users size={12} /> Single Rider
                         </div>
                       )}
-                      {(selectedActivityForDetails as Record<string, unknown>).childSwap && (
+                      {Boolean((selectedActivityForDetails as Record<string, unknown>).childSwap) && (
                         <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-sky-500/10 border border-sky-400/20 text-[10px] text-sky-300 font-black uppercase tracking-widest">
                           <RefreshCw size={12} /> Child Switch
                         </div>

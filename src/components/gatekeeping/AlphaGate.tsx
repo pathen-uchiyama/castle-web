@@ -8,7 +8,6 @@ interface AlphaGateProps {
 
 const AlphaGate: React.FC<AlphaGateProps> = ({ children }) => {
   const [accessCode, setAccessCode] = useState('');
-  const [isAuthorized, setIsAuthorized] = useState(false);
   const [error, setError] = useState(false);
   // Check for existing authorization in session
   const [isAuthorized, setIsAuthorized] = useState(() => {

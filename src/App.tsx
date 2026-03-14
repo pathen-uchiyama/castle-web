@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 
 // ── Types ───────────────────────────────────────────────────────────────────
-type View = 'home' | 'crew' | 'trip_dashboard' | 'guest_survey' | 'vault' | 'new_trip' | 'account_setup' | 'library' | 'transportation' | 'calendar' | 'keepsake' | 'map' | 'packing' | 'subscription';
+type View = 'home' | 'crew' | 'trip_dashboard' | 'guest_survey' | 'vault' | 'new_trip' | 'account_setup' | 'library' | 'transportation' | 'calendar' | 'keepsake' | 'map' | 'packing' | 'subscription' | 'adventures' | 'settings';
 
 interface GuestContent {
   id: number | string;
@@ -171,11 +171,43 @@ function App() {
 
   const [editingMember, setEditingMember] = useState<GuestContent | null>(null);
   const [editingMemberSource, setEditingMemberSource] = useState<'global' | 'adventure' | 'wizard'>('global');
+  const [activeSettingsTab, setActiveSettingsTab] = useState<'profile' | 'preferences' | 'subscription'>('profile');
+
+  // ── Interactive Map State ──────────────────────────────────────────────
+  const [mapZoom, setMapZoom] = useState(1);
+  const [mapPan, setMapPan] = useState({ x: 0, y: 0 });
+  const [isMapDragging, setIsMapDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+
+  const handleMapMouseDown = (e: React.MouseEvent) => {
+    setIsMapDragging(true);
+    setDragStart({ x: e.clientX - mapPan.x, y: e.clientY - mapPan.y });
+  };
+
+  const handleMapMouseMove = (e: React.MouseEvent) => {
+    if (!isMapDragging) return;
+    setMapPan({
+      x: e.clientX - dragStart.x,
+      y: e.clientY - dragStart.y
+    });
+  };
+
+  const handleMapMouseUp = () => {
+    setIsMapDragging(false);
+  };
+
+  const handleZoomIn = () => setMapZoom(prev => Math.min(prev + 0.5, 3));
+  const handleZoomOut = () => setMapZoom(prev => Math.max(prev - 0.5, 0.5));
+  const handleLocateMe = () => {
+    setMapZoom(1);
+    setMapPan({ x: 0, y: 0 });
+  };
 
   const isTripMode = activeView === 'trip_dashboard';
 
   const globalSidebarItems = [
     { id: 'home', label: 'Home Dashboard', icon: LayoutDashboard },
+    { id: 'adventures', label: 'My Adventures', icon: MapPin },
     { id: 'library', label: 'The Library', icon: BookOpen },
     { id: 'transportation', label: 'Transportation', icon: Compass },
     { id: 'calendar', label: 'Crowd Calendar', icon: Calendar },
@@ -184,6 +216,7 @@ function App() {
     { id: 'keepsake', label: 'Digital Keepsake', icon: Camera },
     { id: 'crew', label: 'Family & Friends', icon: Users },
     { id: 'subscription', label: 'Citadel Plan', icon: Crown },
+    { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
   const sidebarItems = isTripMode ? [] : globalSidebarItems;
@@ -675,11 +708,25 @@ function App() {
               </span>
             </div>
             <div className="header-actions">
-              <div className="telemetry-pill">
+              <div className="telemetry-pill mr-2">
                 <div className="status-dot pulse" />
                 <span>MAGIC AWAITS</span>
               </div>
-              <button className="btn-primary-mini">Settings</button>
+              <div className="flex items-center gap-2 bg-white rounded-xl shadow-sm border border-navy/5 p-1 relative">
+                <select 
+                  className="bg-transparent border border-transparent rounded-lg pl-3 pr-8 py-1.5 text-[10px] font-black uppercase tracking-widest text-navy outline-none focus:bg-navy/5 transition-colors cursor-pointer appearance-none z-10 relative bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%230A1929%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_8px_center]"
+                  value={activeAdventureId} 
+                  onChange={(e) => setActiveAdventureId(e.target.value)}
+                  title="Switch Active Trip"
+                >
+                  {adventures.map(adv => (
+                    <option key={adv.id} value={adv.id}>{adv.name}</option>
+                  ))}
+                </select>
+              </div>
+              <button title="Settings" onClick={() => setActiveView('settings')} className="w-9 h-9 shrink-0 ml-1 rounded-xl bg-white text-navy flex items-center justify-center hover:bg-navy hover:text-white transition-colors shadow-sm border border-navy/5">
+                <Settings size={16} />
+              </button>
             </div>
           </header>
         )}
@@ -2288,36 +2335,52 @@ function App() {
                   </div>
                 </div>
 
-                <div className="flex-1 rounded-3xl overflow-hidden border border-navy/10 shadow-inner relative bg-[#e5e3df]">
-                   <img src="https://media.cntraveler.com/photos/5a709b1fbf104332ee402179/master/pass/Disney-Map__2018_WK12P_0939_CP4_MK_13054173877_Full_6819.jpg" alt="Disney Map Mock" className="w-full h-full object-cover opacity-80" />
-                   
-                   {/* Map Overlays Mock */}
-                   <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2">
-                      <div className="relative group cursor-pointer">
-                         <div className="w-10 h-10 bg-rose text-white rounded-full border-2 border-white flex items-center justify-center shadow-lg relative z-10 group-hover:scale-110 transition-transform">
-                            <Coffee size={18} />
-                         </div>
-                         <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white px-3 py-1.5 rounded-lg shadow-xl border border-navy/10 text-[10px] font-black uppercase tracking-widest text-navy whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                            Next Up: Sleepy Hollow
-                         </div>
-                      </div>
-                   </div>
+                <div 
+                  className={`flex-1 rounded-3xl overflow-hidden border border-navy/10 shadow-inner relative bg-[#e5e3df] ${isMapDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+                  onMouseDown={handleMapMouseDown}
+                  onMouseMove={handleMapMouseMove}
+                  onMouseUp={handleMapMouseUp}
+                  onMouseLeave={handleMapMouseUp}
+                >
+                   <div 
+                     className="absolute inset-0 transition-transform duration-75 origin-center will-change-transform"
+                     style={{ transform: `translate(${mapPan.x}px, ${mapPan.y}px) scale(${mapZoom})` }}
+                   >
+                     <img src="https://alittledisneymagic.files.wordpress.com/2012/12/mk-1212.jpg" alt="Disney Map Mock" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] max-w-none object-cover opacity-80 pointer-events-none" />
+                     
+                     {/* Map Overlays Mock */}
+                     <div className="absolute top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2">
+                        <div className="relative group cursor-pointer" onClick={(e) => e.stopPropagation()}>
+                           <div className="w-10 h-10 bg-rose text-white rounded-full border-2 border-white flex items-center justify-center shadow-lg relative z-10 hover:scale-110 transition-transform">
+                              <Coffee size={18} />
+                           </div>
+                           <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white px-3 py-1.5 rounded-lg shadow-xl border border-navy/10 text-[10px] font-black uppercase tracking-widest text-navy whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+                              Next Up: Sleepy Hollow
+                           </div>
+                        </div>
+                     </div>
 
-                   <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                      <div className="relative group cursor-pointer">
-                         <div className="w-8 h-8 bg-blue-500 text-white rounded-full border-2 border-white flex items-center justify-center shadow-lg relative z-10 group-hover:scale-110 transition-transform">
-                            <ShieldCheck size={14} />
-                         </div>
-                         <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white px-3 py-1.5 rounded-lg shadow-xl border border-navy/10 text-[10px] font-black uppercase tracking-widest text-navy whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                            Seven Dwarfs Mine Train (65m)
-                         </div>
-                      </div>
+                     <div className="absolute top-[40%] left-[55%] -translate-x-1/2 -translate-y-1/2">
+                        <div className="relative group cursor-pointer" onClick={(e) => e.stopPropagation()}>
+                           <div className="w-8 h-8 bg-blue-500 text-white rounded-full border-2 border-white flex items-center justify-center shadow-lg relative z-10 hover:scale-110 transition-transform">
+                              <ShieldCheck size={14} />
+                           </div>
+                           <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white px-3 py-1.5 rounded-lg shadow-xl border border-navy/10 text-[10px] font-black uppercase tracking-widest text-navy whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+                              Seven Dwarfs Mine Train (65m)
+                           </div>
+                        </div>
+                     </div>
                    </div>
                    
                    {/* Map Controls */}
                    <div className="absolute bottom-6 right-6 flex flex-col gap-2">
-                      <button title="Zoom In" aria-label="Zoom In" className="w-10 h-10 bg-white rounded-xl shadow-lg border border-navy/5 flex items-center justify-center text-navy hover:bg-navy/5 transition-colors"><Plus size={18} /></button>
-                      <button title="Zoom Out" aria-label="Zoom Out" className="w-10 h-10 bg-white rounded-xl shadow-lg border border-navy/5 flex items-center justify-center text-navy hover:bg-navy/5 transition-colors"><Plus size={18} className="rotate-45" /></button>
+                      <button title="Zoom In" aria-label="Zoom In" onClick={handleZoomIn} className="w-10 h-10 bg-white rounded-xl shadow-lg border border-navy/5 flex items-center justify-center text-navy hover:bg-navy/5 transition-colors"><Plus size={18} /></button>
+                      <button title="Zoom Out" aria-label="Zoom Out" onClick={handleZoomOut} className="w-10 h-10 bg-white rounded-xl shadow-lg border border-navy/5 flex items-center justify-center text-navy hover:bg-navy/5 transition-colors"><Plus size={18} className="rotate-45" /></button>
+                   </div>
+                   <div className="absolute bottom-6 left-6 flex bg-white rounded-xl shadow-lg border border-navy/5 p-1">
+                      <button className="px-4 py-2 text-[10px] font-black uppercase tracking-widest rounded-lg bg-navy/5 text-navy">Rides</button>
+                      <button className="px-4 py-2 text-[10px] font-black uppercase tracking-widest rounded-lg text-navy/40 hover:text-navy hover:bg-navy/5 transition-colors">Dining</button>
+                      <button className="px-4 py-2 text-[10px] font-black uppercase tracking-widest rounded-lg text-navy/40 hover:text-navy hover:bg-navy/5 transition-colors">Facilities</button>
                    </div>
                 </div>
               </div>
@@ -2687,6 +2750,208 @@ function App() {
                    
                 </div>
               </div>
+            )
+          }
+
+          {/* 8.7 SETTINGS VIEW */}
+          {
+            activeView === 'settings' && (
+               <div className="view-settings animate-in fade-in zoom-in-95 duration-500 max-w-5xl mx-auto">
+                  <div className="flex justify-between items-end mb-10">
+                    <div className="text-left">
+                       <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><Settings className="text-gold" /> System Preferences</h2>
+                       <p className="opacity-60">Manage your profile, application settings, and subscription details.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                     <div className="md:col-span-1 space-y-2">
+                        <button onClick={() => setActiveSettingsTab('profile')} className={`w-full text-left px-5 py-3 rounded-xl font-bold text-sm transition-all ${activeSettingsTab === 'profile' ? 'bg-navy text-white shadow-md' : 'text-navy hover:bg-navy/5'}`}>Profile</button>
+                        <button onClick={() => setActiveSettingsTab('preferences')} className={`w-full text-left px-5 py-3 rounded-xl font-bold text-sm transition-all ${activeSettingsTab === 'preferences' ? 'bg-navy text-white shadow-md' : 'text-navy hover:bg-navy/5'}`}>Preferences</button>
+                        <button onClick={() => setActiveSettingsTab('subscription')} className={`w-full text-left px-5 py-3 rounded-xl font-bold text-sm transition-all flex items-center justify-between ${activeSettingsTab === 'subscription' ? 'bg-navy text-white shadow-md' : 'text-navy hover:bg-navy/5'}`}>
+                          <span>Subscription</span>
+                          <Crown size={14} className={activeSettingsTab === 'subscription' ? 'text-gold' : 'text-navy/40'} />
+                        </button>
+                     </div>
+                     
+                     <div className="md:col-span-3">
+                        {activeSettingsTab === 'profile' && (
+                           <div className="luxury-card p-8 text-left animate-in fade-in">
+                              <h3 className="font-header text-2xl mb-6">Profile Settings</h3>
+                              <div className="flex items-center gap-6 mb-8 pb-8 border-b border-navy/10">
+                                 <div className="w-20 h-20 rounded-full bg-gold/20 flex items-center justify-center text-gold text-2xl font-header">P</div>
+                                 <div>
+                                    <button className="bg-navy/5 px-4 py-2 rounded-lg text-xs font-bold text-navy hover:bg-navy/10 transition-colors uppercase tracking-widest mb-2">Change Avatar</button>
+                                    <p className="text-[10px] text-navy/40 uppercase tracking-widest">JPG, GIF or PNG. Max size of 800K</p>
+                                 </div>
+                              </div>
+                              <div className="grid grid-cols-2 gap-6 mb-6">
+                                 <div>
+                                    <label className="text-xs font-black uppercase tracking-widest text-navy/40 mb-2 block">First Name</label>
+                                    <input type="text" defaultValue="Patchen" className="w-full bg-white border border-navy/10 rounded-xl px-4 py-3 font-bold text-navy outline-none focus:border-gold transition-colors" />
+                                 </div>
+                                 <div>
+                                    <label className="text-xs font-black uppercase tracking-widest text-navy/40 mb-2 block">Last Name</label>
+                                    <input type="text" defaultValue="Uchiyama" className="w-full bg-white border border-navy/10 rounded-xl px-4 py-3 font-bold text-navy outline-none focus:border-gold transition-colors" />
+                                 </div>
+                                 <div className="col-span-2">
+                                    <label className="text-xs font-black uppercase tracking-widest text-navy/40 mb-2 block">Email Address</label>
+                                    <input type="email" defaultValue="patchenu@gmail.com" className="w-full bg-white border border-navy/10 rounded-xl px-4 py-3 font-bold text-navy outline-none focus:border-gold transition-colors" />
+                                 </div>
+                              </div>
+                              <button className="bg-gold text-navy font-black uppercase tracking-widest text-[10px] px-6 py-3 rounded-xl hover:bg-gold-light transition-colors">Save Changes</button>
+                           </div>
+                        )}
+
+                        {activeSettingsTab === 'preferences' && (
+                           <div className="luxury-card p-8 text-left animate-in fade-in">
+                              <h3 className="font-header text-2xl mb-6">System Preferences</h3>
+                              <div className="space-y-6">
+                                 <div className="flex justify-between items-center pb-6 border-b border-navy/5">
+                                    <div>
+                                       <h4 className="font-bold text-navy">Push Notifications</h4>
+                                       <p className="text-sm text-navy/60">Receive alerts for dining snipers and itinerary updates.</p>
+                                    </div>
+                                    <div className="w-12 h-6 bg-emerald-400 rounded-full relative cursor-pointer">
+                                       <div className="w-4 h-4 bg-white rounded-full absolute top-1 right-1 shadow-sm"></div>
+                                    </div>
+                                 </div>
+                                 <div className="flex justify-between items-center pb-6 border-b border-navy/5">
+                                    <div>
+                                       <h4 className="font-bold text-navy">Email Summaries</h4>
+                                       <p className="text-sm text-navy/60">Weekly digests of your upcoming adventure prep.</p>
+                                    </div>
+                                    <div className="w-12 h-6 bg-emerald-400 rounded-full relative cursor-pointer">
+                                       <div className="w-4 h-4 bg-white rounded-full absolute top-1 right-1 shadow-sm"></div>
+                                    </div>
+                                 </div>
+                                 <div className="flex justify-between items-center pb-6 border-b border-navy/5">
+                                    <div>
+                                       <h4 className="font-bold text-navy">Dark Mode</h4>
+                                       <p className="text-sm text-navy/60">Switch to a darker theme for nighttime planning.</p>
+                                    </div>
+                                    <div className="w-12 h-6 bg-navy/10 rounded-full relative cursor-pointer">
+                                       <div className="w-4 h-4 bg-white rounded-full absolute top-1 left-1 shadow-sm"></div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        )}
+
+                        {activeSettingsTab === 'subscription' && (
+                           <div className="animate-in fade-in">
+                              <div className="luxury-card p-8 bg-gradient-to-br from-navy to-[#1a3345] text-white border border-gold/30 shadow-2xl relative flex flex-col overflow-hidden text-left mb-8">
+                                 <div className="absolute top-0 right-0 w-64 h-64 bg-gold/10 rounded-full blur-3xl -mt-32 -mr-32 pointer-events-none"></div>
+                                 <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-gold-light via-gold to-gold-dark"></div>
+                                 
+                                 <div className="flex justify-between items-start mb-2 relative z-10">
+                                   <h3 className="text-3xl font-header text-white flex items-center gap-2"><Crown size={24} className="text-gold" /> Citadel Plan</h3>
+                                   <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-1"><CheckCircle size={10} /> Active</span>
+                                 </div>
+                                 
+                                 <div className="flex items-baseline gap-1 mb-8 relative z-10 border-b border-white/10 pb-8">
+                                    <span className="text-4xl font-black text-white">$12</span>
+                                    <span className="text-sm font-bold text-white/40 uppercase tracking-widest">/ month</span>
+                                    <span className="ml-4 text-xs text-white/60">Next billing date: Nov 14, 2026</span>
+                                 </div>
+                                 
+                                 <div className="grid grid-cols-2 gap-6 relative z-10">
+                                    <div>
+                                       <h4 className="text-[10px] font-black uppercase tracking-widest text-gold mb-2">Payment Method</h4>
+                                       <div className="flex items-center gap-3 bg-white/5 border border-white/10 p-3 rounded-xl">
+                                          <div className="w-8 h-5 bg-white rounded flex items-center justify-center text-[8px] font-black text-navy">VISA</div>
+                                          <div>
+                                             <span className="block text-sm font-bold">•••• 4242</span>
+                                             <span className="block text-[9px] text-white/40 uppercase tracking-widest">Expires 12/28</span>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div className="flex flex-col justify-center gap-2">
+                                       <button className="bg-white/10 hover:bg-white/20 text-white font-bold py-3 rounded-xl transition-colors text-xs uppercase tracking-widest border border-white/10">Update Payment</button>
+                                       <button className="bg-transparent hover:bg-rose/10 hover:text-rose text-white/40 font-bold py-3 rounded-xl transition-colors text-xs uppercase tracking-widest">Cancel Plan</button>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div className="luxury-card p-8 border border-navy/5 text-left">
+                                 <h3 className="font-header text-xl mb-6">Billing History</h3>
+                                 <table className="w-full text-sm">
+                                    <thead>
+                                       <tr className="text-[10px] font-black uppercase tracking-widest text-navy/40 border-b border-navy/5">
+                                          <th className="pb-3 text-left">Date</th>
+                                          <th className="pb-3 text-left">Amount</th>
+                                          <th className="pb-3 text-left">Status</th>
+                                          <th className="pb-3 text-right">Receipt</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr className="border-b border-navy/5 last:border-0">
+                                          <td className="py-4 font-bold text-navy">Oct 14, 2026</td>
+                                          <td className="py-4">$12.00</td>
+                                          <td className="py-4"><span className="bg-emerald-100 text-emerald-600 px-2 py-1 rounded-md text-[9px] font-black uppercase tracking-widest">Paid</span></td>
+                                          <td className="py-4 text-right"><button className="text-gold hover:text-gold-dark transition-colors"><ExternalLink size={14} className="inline" /></button></td>
+                                       </tr>
+                                       <tr className="border-b border-navy/5 last:border-0">
+                                          <td className="py-4 font-bold text-navy">Sep 14, 2026</td>
+                                          <td className="py-4">$12.00</td>
+                                          <td className="py-4"><span className="bg-emerald-100 text-emerald-600 px-2 py-1 rounded-md text-[9px] font-black uppercase tracking-widest">Paid</span></td>
+                                          <td className="py-4 text-right"><button className="text-gold hover:text-gold-dark transition-colors"><ExternalLink size={14} className="inline" /></button></td>
+                                       </tr>
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
+                        )}
+                     </div>
+                  </div>
+               </div>
+            )
+          }
+
+          {/* 8.8 MY ADVENTURES VIEW */}
+          {
+            activeView === 'adventures' && (
+               <div className="view-adventures animate-in fade-in zoom-in-95 duration-500">
+                  <div className="flex justify-between items-end mb-10">
+                     <div className="text-left">
+                        <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><MapPin className="text-gold" /> My Adventures</h2>
+                        <p className="opacity-60">Your complete archive of past, present, and future trips.</p>
+                     </div>
+                     <button
+                       onClick={() => {
+                         setWizardStep(1);
+                         setActiveView('new_trip');
+                       }}
+                       className="btn-primary-mini flex items-center gap-2"
+                     >
+                       <Plus size={16} /> New Trip
+                     </button>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    {adventures.map(adv => (
+                      <div key={adv.id} onClick={() => { setActiveAdventureId(adv.id); setActiveView('trip_dashboard'); }} className="luxury-card p-6 cursor-pointer hover:-translate-y-1 transition-transform group relative overflow-hidden text-left">
+                        <div className={`absolute top-0 left-0 w-full h-1 ${adv.status === 'past' ? 'bg-navy/20' : 'bg-gold'}`}></div>
+                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110 ${adv.status === 'past' ? 'bg-navy/5 text-navy/40' : 'bg-gold/10 text-gold'}`}>
+                          {adv.status === 'past' ? <History size={24} /> : <Compass size={24} />}
+                        </div>
+                        <h4 className={`font-header text-xl mb-2 ${adv.status === 'past' ? 'text-navy/60' : ''}`}>{adv.name}</h4>
+                        <p className="text-xs opacity-60 mb-6">{adv.parks.join(', ')}</p>
+                        <div className={`flex justify-between items-center text-xs font-bold uppercase tracking-widest mt-auto pt-4 border-t border-navy/5 ${adv.status === 'past' ? 'text-navy/40' : 'text-gold'}`}>
+                          <span>{new Date(adv.startDate).toLocaleDateString()}</span>
+                          <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-10px] group-hover:translate-x-0 duration-300" />
+                        </div>
+                      </div>
+                    ))}
+                    
+                    <div onClick={() => { setWizardStep(1); setActiveView('new_trip'); }} className="luxury-card p-6 cursor-pointer hover:-translate-y-1 transition-transform group border-2 border-dashed border-navy/10 hover:border-gold/50 bg-transparent flex flex-col items-center justify-center min-h-[220px]">
+                      <div className="w-12 h-12 bg-navy/5 rounded-full flex items-center justify-center mb-4 text-navy opacity-40 group-hover:opacity-100 transition-opacity">
+                        <Plus size={24} />
+                      </div>
+                      <span className="font-bold text-sm text-navy">Add New Adventure</span>
+                    </div>
+                  </div>
+               </div>
             )
           }
 

@@ -645,174 +645,165 @@ function App() {
       {/* Main Content Area */}
       <main className={`flex-1 ${activeView !== 'home' ? 'p-8' : 'p-0'}`}>
         
-        {/* 0. THE JOURNAL (HOME) */}
+        {/* 0. THE JOURNAL (HOME) — Boutique Mosaic Grid */}
         {activeView === 'home' && (
-          <div className="view-home animate-in fade-in duration-500 w-full flex flex-col items-center">
+          <div className="view-home animate-in fade-in duration-500 w-full min-h-screen bg-parchment">
             
-            {/* Hero Greeting — warm, inviting, not sterile */}
-            <div className="w-full bg-gradient-to-br from-[#12232E] via-[#1a3345] to-[#0f2a3d] text-white py-20 px-8 flex flex-col items-center relative overflow-hidden">
-               <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gold/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
-               <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-thistle/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4 pointer-events-none"></div>
-               <div className="relative z-10 flex flex-col items-center">
-                  <div className="mb-6 w-16 h-16 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 flex items-center justify-center shadow-lg">
-                     <Shield size={28} className="text-gold" />
-                  </div>
-                  <h1 className="text-4xl md:text-5xl font-header tracking-tight text-center leading-tight mb-3">Welcome, Patchen.</h1>
-                  <p className="text-lg text-white/60 font-sans tracking-tight">Your Journey Awaits.</p>
-               </div>
+            {/* Centered Welcome */}
+            <div className="text-center pt-16 pb-12 px-6">
+               <h1 className="text-5xl md:text-6xl font-header text-obsidian tracking-tight">Welcome, Patchen</h1>
             </div>
 
-            <div className="w-full max-w-6xl mx-auto px-6 -mt-10 relative z-10 pb-16">
-               
-               {/* The Four Experience Collections */}
-               <div className="flex flex-col gap-14 w-full">
-                  
-                  {/* ═══════════ Collection One: The Daily Pulse ═══════════ */}
-                  <div>
-                     <div className="flex items-center gap-3 mb-8">
-                        <div className="w-2 h-8 bg-gold rounded-full"></div>
-                        <h3 className="text-2xl font-header text-obsidian">The Daily Pulse</h3>
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-slate/50 ml-2">Real-Time Magic</span>
+            <div className="w-full max-w-7xl mx-auto px-6 pb-20">
+
+               {/* ════════════ THE HEARTH — Hero Card (Full Span) ════════════ */}
+               <div
+                  onClick={() => setActiveView('home')}
+                  className="bg-white border border-[#626466]/10 w-full cursor-pointer mb-14 transition-all hover:shadow-lg group"
+                  style={{ padding: '32px' }}
+               >
+                  <div className="flex flex-col md:flex-row md:items-center gap-8">
+                     {/* Golden Anchor — Most visually striking element */}
+                     <div className="flex items-center justify-center shrink-0">
+                        <div className="w-24 h-24 rounded-full bg-[#5D4B7A] flex items-center justify-center shadow-lg">
+                           <Compass size={40} className="text-[#947120]" />
+                        </div>
                      </div>
-                     <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
-                        {/* The Hearth */}
-                        <div onClick={() => setActiveView('home')} className="md:col-span-4 bg-white rounded-2xl p-7 flex flex-col cursor-pointer hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group border border-navy/5 shadow-md overflow-hidden relative">
-                           <div className="absolute top-0 right-0 w-32 h-32 bg-gold/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/4 group-hover:bg-gold/10 transition-colors pointer-events-none"></div>
-                           <div className="w-12 h-12 rounded-xl bg-amber-50 text-gold flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                              <Home size={22} />
-                           </div>
-                           <h4 className="text-xl font-header text-navy mb-2">The Hearth</h4>
-                           <p className="text-sm text-navy/50 leading-relaxed mb-4 flex-1">Your central gathering place for today's highlights and trip status.</p>
-                           <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-gold/60 group-hover:text-gold transition-colors">
-                              <Sparkles size={12} /> Today's Overview
-                           </div>
+                     <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                           <h2 className="text-3xl font-header text-[#1A1A1B]">The Hearth</h2>
+                           <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-[#5D4B7A] border border-[#5D4B7A]/20 px-2.5 py-1">The Golden Anchor</span>
                         </div>
-
-                        {/* The Active Adventure — THE GOLDEN ANCHOR (Hero Card) */}
-                        <div onClick={() => {
-                           const activeAdv = adventures.find(a => a.status !== 'past');
-                           if (activeAdv) {
-                              setActiveAdventureId(activeAdv.id);
-                              setActiveView('trip_dashboard');
-                           } else {
-                              setActiveView('new_trip');
-                           }
-                        }} className="md:col-span-8 bg-gradient-to-br from-[#5D4B7A] via-[#6B5A8A] to-[#4A3A66] rounded-2xl p-8 flex flex-col cursor-pointer hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 group text-white relative overflow-hidden shadow-lg">
-                           <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
-                           <div className="absolute bottom-0 left-0 w-48 h-48 bg-gold/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4 pointer-events-none"></div>
-                           <div className="flex justify-between items-start mb-6 relative z-10">
-                              <div className="w-14 h-14 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                                 <Compass size={26} className="text-[#947120]" />
-                              </div>
-                              <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/40 bg-white/10 px-3 py-1.5 rounded-full border border-white/10 backdrop-blur-sm">The Golden Anchor</span>
-                           </div>
-                           <h4 className="text-3xl font-header mb-3 relative z-10">The Active Adventure</h4>
-                           <p className="text-white/70 text-sm leading-relaxed mb-6 max-w-md relative z-10">Your live, time-synced journey through the park. Tap to see your itinerary, real-time wait times, and next steps.</p>
-                           <div className="mt-auto flex items-center justify-between relative z-10 pt-4 border-t border-white/10">
-                              <span className="text-xs font-bold text-white/50">
-                                 {adventures.find(a => a.status !== 'past')?.name || 'Start a New Adventure'}
-                              </span>
-                              <ArrowRight size={16} className="text-white/40 group-hover:text-white group-hover:translate-x-1 transition-all" />
-                           </div>
-                        </div>
-
-                        {/* The Compass */}
-                        <div onClick={() => setActiveView('map')} className="md:col-span-12 bg-white rounded-2xl p-6 flex items-center gap-6 cursor-pointer hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group border border-navy/5 shadow-md overflow-hidden relative">
-                           <div className="w-14 h-14 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                              <Map size={24} />
-                           </div>
-                           <div className="flex-1 min-w-0">
-                              <h4 className="text-xl font-header text-navy mb-1">The Compass</h4>
-                              <p className="text-sm text-navy/50 truncate">Our "Logic over Luck" interactive guide — pan, zoom, and explore the magic around you.</p>
-                           </div>
-                           <ArrowRight size={16} className="text-navy/20 group-hover:text-gold group-hover:translate-x-1 transition-all shrink-0" />
-                        </div>
+                        <p className="text-[#626466] font-sans text-sm" style={{ letterSpacing: '-0.02em' }}>
+                           Your central gathering place. See today's highlights, active itinerary status, and next steps at a glance.
+                        </p>
+                     </div>
+                     <div className="shrink-0">
+                        <ArrowRight size={20} className="text-[#626466]/30 group-hover:text-[#947120] group-hover:translate-x-1 transition-all" />
                      </div>
                   </div>
-
-                  {/* ═══════════ Collection Two: The Grand Plan ═══════════ */}
-                  <div>
-                     <div className="flex items-center gap-3 mb-8">
-                        <div className="w-2 h-8 bg-thistle rounded-full"></div>
-                        <h3 className="text-2xl font-header text-obsidian">The Grand Plan</h3>
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-slate/50 ml-2">Boutique Strategy</span>
-                     </div>
-                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        {[
-                           { view: 'adventures', icon: <MapPin size={22} />, title: 'The Intelligent Blueprint', desc: 'Your master strategic vision for the trip ahead.', color: 'bg-blue-50 text-blue-600', accent: 'group-hover:border-blue-200' },
-                           { view: 'calendar', icon: <Calendar size={22} />, title: 'The Magic Window', desc: 'Predictive crowd modeling to find the perfect moment.', color: 'bg-purple-50 text-purple-600', accent: 'group-hover:border-purple-200' },
-                           { view: 'transportation', icon: <Compass size={22} />, title: 'The Royal Carriage', desc: 'Refined transit logistics — monorails, buses, and boats.', color: 'bg-rose/5 text-rose', accent: 'group-hover:border-rose/20' },
-                        ].map((item, idx) => (
-                           <div key={idx} onClick={() => setActiveView(item.view as any)} className={`bg-white rounded-2xl p-7 flex flex-col cursor-pointer hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group border border-navy/5 shadow-md overflow-hidden relative ${item.accent}`}>
-                              <div className="absolute top-0 right-0 w-24 h-24 bg-navy/3 rounded-full blur-2xl -translate-y-1/2 translate-x-1/4 group-hover:bg-gold/5 transition-colors pointer-events-none"></div>
-                              <div className={`w-12 h-12 rounded-xl ${item.color} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform`}>
-                                 {item.icon}
-                              </div>
-                              <h4 className="text-lg font-header text-navy mb-2">{item.title}</h4>
-                              <p className="text-sm text-navy/50 leading-relaxed mb-5 flex-1">{item.desc}</p>
-                              <div className="mt-auto flex items-center justify-between pt-4 border-t border-navy/5">
-                                 <span className="text-[10px] font-bold uppercase tracking-widest text-navy/30 group-hover:text-gold transition-colors">Explore</span>
-                                 <ArrowRight size={14} className="text-navy/15 group-hover:text-gold group-hover:translate-x-1 transition-all" />
-                              </div>
-                           </div>
-                        ))}
-                     </div>
-                  </div>
-
-                  {/* ═══════════ Collection Three: The Field Kit ═══════════ */}
-                  <div>
-                     <div className="flex items-center gap-3 mb-8">
-                        <div className="w-2 h-8 bg-teal rounded-full"></div>
-                        <h3 className="text-2xl font-header text-obsidian">The Field Kit</h3>
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-slate/50 ml-2">Preparation & Secrets</span>
-                     </div>
-                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        {[
-                           { view: 'library', icon: <BookOpen size={22} />, title: 'The Library of Whispers', desc: 'Curated secrets, menus, and hidden details the crowds miss.', color: 'bg-amber-50 text-amber-700', accent: 'group-hover:border-amber-200' },
-                           { view: 'packing', icon: <Briefcase size={22} />, title: "The Traveler's Trunk", desc: 'Contextual packing lists powered by weather and your plans.', color: 'bg-cyan-50 text-cyan-600', accent: 'group-hover:border-cyan-200' },
-                           { view: 'crew', icon: <Users size={22} />, title: 'The Inner Circle', desc: 'Manage your family, friends, and shared access keys.', color: 'bg-pink-50 text-pink-600', accent: 'group-hover:border-pink-200' },
-                        ].map((item, idx) => (
-                           <div key={idx} onClick={() => setActiveView(item.view as any)} className={`bg-white rounded-2xl p-7 flex flex-col cursor-pointer hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group border border-navy/5 shadow-md overflow-hidden relative ${item.accent}`}>
-                              <div className="absolute top-0 right-0 w-24 h-24 bg-navy/3 rounded-full blur-2xl -translate-y-1/2 translate-x-1/4 group-hover:bg-gold/5 transition-colors pointer-events-none"></div>
-                              <div className={`w-12 h-12 rounded-xl ${item.color} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform`}>
-                                 {item.icon}
-                              </div>
-                              <h4 className="text-lg font-header text-navy mb-2">{item.title}</h4>
-                              <p className="text-sm text-navy/50 leading-relaxed mb-5 flex-1">{item.desc}</p>
-                              <div className="mt-auto flex items-center justify-between pt-4 border-t border-navy/5">
-                                 <span className="text-[10px] font-bold uppercase tracking-widest text-navy/30 group-hover:text-gold transition-colors">Explore</span>
-                                 <ArrowRight size={14} className="text-navy/15 group-hover:text-gold group-hover:translate-x-1 transition-all" />
-                              </div>
-                           </div>
-                        ))}
-                     </div>
-                  </div>
-
-                  {/* ═══════════ Collection Four: The Keepsake ═══════════ */}
-                  <div>
-                     <div className="flex items-center gap-3 mb-8">
-                        <div className="w-2 h-8 bg-rose rounded-full"></div>
-                        <h3 className="text-2xl font-header text-obsidian">The Keepsake</h3>
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-slate/50 ml-2">Memories</span>
-                     </div>
-                     <div onClick={() => setActiveView('keepsake')} className="bg-white rounded-2xl p-8 flex items-center gap-8 cursor-pointer hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group border border-navy/5 shadow-md overflow-hidden relative">
-                        <div className="absolute top-0 right-0 w-48 h-48 bg-rose/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 group-hover:bg-rose/10 transition-colors pointer-events-none"></div>
-                        <div className="w-16 h-16 rounded-2xl bg-rose/10 text-rose flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                           <Camera size={28} />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                           <h4 className="text-xl font-header text-navy mb-2">The Digital Gallery</h4>
-                           <p className="text-sm text-navy/50 leading-relaxed">Your archival record and post-trip "Echo" — scrapbooks, highlight reels, and the memories that last forever.</p>
-                        </div>
-                        <ArrowRight size={18} className="text-navy/15 group-hover:text-rose group-hover:translate-x-1 transition-all shrink-0" />
-                     </div>
-                  </div>
-
                </div>
-               
-               {/* Footer / Settings Access */}
-               <div className="mt-16 pt-8 border-t border-slate/10 flex justify-center">
-                  <button title="System Preferences" onClick={() => setActiveView('settings')} className="text-[10px] font-bold uppercase tracking-widest text-slate/40 hover:text-obsidian flex items-center gap-2 transition-colors">
+
+               {/* ════════════ COLLECTION: The Daily Pulse ════════════ */}
+               <div className="mb-14">
+                  <h3 className="text-2xl font-header text-[#1A1A1B] mb-6">The Daily Pulse</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#626466]/10">
+                     {/* The Active Adventure */}
+                     <div
+                        onClick={() => {
+                           const activeAdv = adventures.find(a => a.status !== 'past');
+                           if (activeAdv) { setActiveAdventureId(activeAdv.id); setActiveView('trip_dashboard'); }
+                           else { setActiveView('new_trip'); }
+                        }}
+                        className="bg-white p-8 flex flex-col cursor-pointer hover:shadow-lg transition-all group md:col-span-2"
+                     >
+                        <div className="flex items-start justify-between mb-6">
+                           <div className="w-16 h-16 rounded-full bg-[#5D4B7A] flex items-center justify-center">
+                              <Compass size={28} className="text-[#947120]" />
+                           </div>
+                           <ArrowRight size={16} className="text-[#626466]/20 group-hover:text-[#947120] group-hover:translate-x-1 transition-all mt-2" />
+                        </div>
+                        <h4 className="text-xl font-header text-[#1A1A1B] mb-2">The Active Adventure</h4>
+                        <p className="text-[#626466] font-sans text-sm flex-1" style={{ letterSpacing: '-0.02em' }}>
+                           Your live, time-synced journey through the park — itinerary, wait times, and next steps.
+                        </p>
+                        <div className="mt-6 pt-4 border-t border-[#626466]/10">
+                           <span className="text-xs font-bold text-[#626466]/40">
+                              {adventures.find(a => a.status !== 'past')?.name || 'Start a New Adventure'}
+                           </span>
+                        </div>
+                     </div>
+                     {/* The Compass */}
+                     <div
+                        onClick={() => setActiveView('map')}
+                        className="bg-white p-8 flex flex-col cursor-pointer hover:shadow-lg transition-all group"
+                     >
+                        <div className="mb-6">
+                           <Map size={24} className="text-[#1A1A1B]" />
+                        </div>
+                        <h4 className="text-xl font-header text-[#1A1A1B] mb-2">The Compass</h4>
+                        <p className="text-[#626466] font-sans text-sm flex-1" style={{ letterSpacing: '-0.02em' }}>
+                           Our "Logic over Luck" interactive guide — pan, zoom, and explore the magic around you.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+
+               {/* ════════════ COLLECTION: The Grand Plan ════════════ */}
+               <div className="mb-14">
+                  <h3 className="text-2xl font-header text-[#1A1A1B] mb-6">The Grand Plan</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#626466]/10">
+                     {[
+                        { view: 'adventures' as const, icon: <MapPin size={24} />, title: 'The Intelligent Blueprint', desc: 'Your master strategic vision for every park day.' },
+                        { view: 'calendar' as const, icon: <Calendar size={24} />, title: 'The Magic Window', desc: 'Predictive crowd modeling to find the perfect moment.' },
+                        { view: 'transportation' as const, icon: <Compass size={24} />, title: 'The Royal Carriage', desc: 'Refined transit logistics — monorails, buses, and boats.' },
+                     ].map((item, idx) => (
+                        <div
+                           key={idx}
+                           onClick={() => setActiveView(item.view)}
+                           className="bg-white p-8 flex flex-col cursor-pointer hover:shadow-lg transition-all group"
+                        >
+                           <div className="mb-6 text-[#1A1A1B]">{item.icon}</div>
+                           <h4 className="text-xl font-header text-[#1A1A1B] mb-2">{item.title}</h4>
+                           <p className="text-[#626466] font-sans text-sm flex-1" style={{ letterSpacing: '-0.02em' }}>{item.desc}</p>
+                           <div className="mt-6 pt-4 border-t border-[#626466]/10 flex justify-end">
+                              <ArrowRight size={14} className="text-[#626466]/20 group-hover:text-[#947120] group-hover:translate-x-1 transition-all" />
+                           </div>
+                        </div>
+                     ))}
+                  </div>
+               </div>
+
+               {/* ════════════ COLLECTION: The Field Kit ════════════ */}
+               <div className="mb-14">
+                  <h3 className="text-2xl font-header text-[#1A1A1B] mb-6">The Field Kit</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#626466]/10">
+                     {[
+                        { view: 'library' as const, icon: <BookOpen size={24} />, title: 'The Library of Whispers', desc: 'Curated secrets, menus, and hidden details the crowds miss.' },
+                        { view: 'packing' as const, icon: <Briefcase size={24} />, title: "The Traveler's Trunk", desc: 'Contextual packing lists powered by weather and your plan.' },
+                        { view: 'crew' as const, icon: <Users size={24} />, title: 'The Inner Circle', desc: 'Manage your family, friends, and shared access keys.' },
+                     ].map((item, idx) => (
+                        <div
+                           key={idx}
+                           onClick={() => setActiveView(item.view)}
+                           className="bg-white p-8 flex flex-col cursor-pointer hover:shadow-lg transition-all group"
+                        >
+                           <div className="mb-6 text-[#1A1A1B]">{item.icon}</div>
+                           <h4 className="text-xl font-header text-[#1A1A1B] mb-2">{item.title}</h4>
+                           <p className="text-[#626466] font-sans text-sm flex-1" style={{ letterSpacing: '-0.02em' }}>{item.desc}</p>
+                           <div className="mt-6 pt-4 border-t border-[#626466]/10 flex justify-end">
+                              <ArrowRight size={14} className="text-[#626466]/20 group-hover:text-[#947120] group-hover:translate-x-1 transition-all" />
+                           </div>
+                        </div>
+                     ))}
+                  </div>
+               </div>
+
+               {/* ════════════ COLLECTION: The Keepsake ════════════ */}
+               <div className="mb-14">
+                  <h3 className="text-2xl font-header text-[#1A1A1B] mb-6">The Keepsake</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#626466]/10">
+                     <div
+                        onClick={() => setActiveView('keepsake')}
+                        className="bg-white p-8 flex flex-col cursor-pointer hover:shadow-lg transition-all group md:col-span-3"
+                     >
+                        <div className="flex items-center gap-6">
+                           <Camera size={24} className="text-[#1A1A1B] shrink-0" />
+                           <div className="flex-1 min-w-0">
+                              <h4 className="text-xl font-header text-[#1A1A1B] mb-1">The Digital Gallery</h4>
+                              <p className="text-[#626466] font-sans text-sm" style={{ letterSpacing: '-0.02em' }}>
+                                 Your archival record and post-trip memories — scrapbooks, highlight reels, and the moments that last forever.
+                              </p>
+                           </div>
+                           <ArrowRight size={16} className="text-[#626466]/20 group-hover:text-[#947120] group-hover:translate-x-1 transition-all shrink-0" />
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               {/* Footer / Settings */}
+               <div className="pt-8 border-t border-[#626466]/10 flex justify-center">
+                  <button title="System Preferences" onClick={() => setActiveView('settings')} className="text-[10px] font-bold uppercase tracking-widest text-[#626466]/40 hover:text-[#1A1A1B] flex items-center gap-2 transition-colors">
                      <Settings size={14} /> System Preferences
                   </button>
                </div>

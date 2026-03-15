@@ -2,19 +2,19 @@
 
 Welcome to the Castle Web frontend application. This is a React + TypeScript + Vite project designed as the pre-trip planning web app for the Castle system.
 
-## Overview: The Sovereign Citadel Dashboard
+## Overview: The Sophisticated Whimsy Dashboard
 
-Castle Web has been refactored into the "Sovereign Citadel" architecture—an immersive, card-based command center. Navigation is categorized into four strategic "Pillars":
+Castle Web presents the "Sophisticated Whimsy" experience — a high-end, leather-bound travel journal interface. Navigation is organized into four Experience Collections:
 
-1. **The Pulse**: Operational / Real-Time tools (Home Dashboard, My Upcoming Adventures, Interactive Map).
-2. **The Blueprint**: Strategic Planning (Citadel Plan, Crowd Calendar, Transportation).
-3. **The Library & Provisions**: Pre-trip prep (The Library, Smart Packing, Family & Friends).
-4. **The Echo**: Post-trip reflections (Digital Keepsake).
+1. **The Daily Pulse**: Real-time magic (The Hearth, The Active Adventure, The Compass).
+2. **The Grand Plan**: Boutique strategy (The Intelligent Blueprint, The Magic Window, The Royal Carriage).
+3. **The Field Kit**: Preparation & secrets (The Library of Whispers, The Traveler's Trunk, The Inner Circle).
+4. **The Keepsake**: Memories (The Digital Gallery).
 
-The interface adheres to the `"Executive Plaid"` design philosophy:
+Design principles:
 - Background: Aged Parchment (`#F9F7F2`)
 - Typography: Publico Headline (Titles) & Inter (Utility text)
-- Containers: Stark white, 0px border-radius Sovereign Cards with Slate Plaid and Royal Thistle accents.
+- Stationery Cards: Crisp white, 0px radius, Slate Plaid borders with Royal Thistle and Burnished Gold accents.
 
 ## Setup & Development
 

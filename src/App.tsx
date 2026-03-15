@@ -210,10 +210,10 @@ function App() {
     { id: 'adventures', label: 'My Adventures', icon: MapPin },
     { id: 'library', label: 'The Library', icon: BookOpen },
     { id: 'transportation', label: 'Transportation', icon: Compass },
-    { id: 'calendar', label: 'Crowd Calendar', icon: Calendar },
-    { id: 'map', label: 'Interactive Map', icon: Map },
-    { id: 'packing', label: 'Smart Packing', icon: Umbrella },
-    { id: 'keepsake', label: 'Digital Keepsake', icon: Camera },
+    { id: 'calendar', label: 'The Magic Window', icon: Calendar },
+    { id: 'map', label: 'The Compass', icon: Map },
+    { id: 'packing', label: "The Traveler's Trunk", icon: Umbrella },
+    { id: 'keepsake', label: 'The Digital Gallery', icon: Camera },
     { id: 'crew', label: 'Family & Friends', icon: Users },
     { id: 'subscription', label: 'Citadel Plan', icon: Crown },
     { id: 'settings', label: 'Settings', icon: Settings },
@@ -620,8 +620,8 @@ function App() {
       {activeView !== 'guest_survey' && activeView !== 'account_setup' && activeView !== 'home' && (
         <header className="w-full flex justify-between items-center px-8 py-4 border-b border-slate/15 bg-white shrink-0">
            <div className="flex items-center gap-4">
-              <button title="Command Center" onClick={() => setActiveView('home')} className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate hover:text-navy transition-colors">
-                 <ArrowRight size={14} className="rotate-180" /> Command Center
+              <button title="The Journal" onClick={() => setActiveView('home')} className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate hover:text-navy transition-colors">
+                 <ArrowRight size={14} className="rotate-180" /> The Journal
               </button>
            </div>
            
@@ -645,7 +645,7 @@ function App() {
       {/* Main Content Area */}
       <main className={`flex-1 ${activeView !== 'home' ? 'p-8' : 'p-0'}`}>
         
-        {/* 0. SOVEREIGN DASHBOARD (HOME) */}
+        {/* 0. THE JOURNAL (HOME) */}
         {activeView === 'home' && (
           <div className="view-home animate-in fade-in duration-500 w-full flex flex-col items-center py-12 px-6">
             
@@ -654,22 +654,22 @@ function App() {
                <div className="mb-8 p-3 bg-obsidian rounded-none border border-slate/20 flex items-center justify-center">
                  <Shield size={32} className="text-parchment" />
                </div>
-               <h1 className="text-4xl md:text-5xl font-header text-obsidian tracking-tight">Welcome, Patchen. Your Strategy is Active.</h1>
+               <h1 className="text-4xl md:text-5xl font-header text-obsidian tracking-tight">Welcome, Patchen. Your Journey Awaits.</h1>
             </div>
 
             <div className="w-full max-w-5xl">
                
-               {/* The Four Citadel Pillars */}
+               {/* The Four Experience Collections */}
                <div className="flex flex-col gap-12 w-full max-w-6xl mx-auto">
                   
-                  {/* Pillar One: The Pulse */}
+                  {/* The Daily Pulse */}
                   <div>
-                     <h3 className="text-3xl font-header text-obsidian mb-6 pb-4 border-b border-slate/15">Pillar One: The Pulse</h3>
+                     <h3 className="text-3xl font-header text-obsidian mb-6 pb-4 border-b border-slate/15">The Daily Pulse</h3>
                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div onClick={() => setActiveView('home')} className="bg-white border border-slate/15 rounded-none p-6 flex flex-col cursor-pointer hover:border-b-2 hover:border-b-thistle transition-all group overflow-hidden">
                            <div className="mb-4 text-obsidian"><Home size={24} /></div>
-                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">Home Dashboard</h4>
-                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Central at-a-glance status.</p>
+                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">The Hearth</h4>
+                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Your central gathering place for today's highlights.</p>
                         </div>
                         <div onClick={() => {
                            const activeAdv = adventures.find(a => a.status !== 'past');
@@ -683,74 +683,74 @@ function App() {
                            <div className="absolute top-0 right-0 p-2 text-thistle group-hover:text-white">
                               <Compass size={16} />
                            </div>
-                           <div className="mb-4 text-thistle group-hover:text-white"><Compass size={28} /></div>
-                           <h4 className="text-2xl font-header text-thistle group-hover:text-white mb-2 truncate">My Adventure</h4>
-                           <p className="text-slate font-sans tracking-tight text-sm overflow-hidden text-ellipsis whitespace-nowrap group-hover:text-white/80">Active, time-synced itinerary operational logic.</p>
+                           <div className="mb-4 text-[#947120] group-hover:text-white"><Compass size={28} /></div>
+                           <h4 className="text-2xl font-header text-thistle group-hover:text-white mb-2 truncate">The Active Adventure</h4>
+                           <p className="text-slate font-sans tracking-tight text-sm overflow-hidden text-ellipsis whitespace-nowrap group-hover:text-white/80">Your live, time-synced journey through the park.</p>
                            <span className="mt-8 text-xs font-black uppercase tracking-widest text-thistle group-hover:text-white flex justify-between items-center">
-                             The Sovereign Key
+                             The Golden Anchor
                              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                            </span>
                         </div>
                         <div onClick={() => setActiveView('map')} className="bg-white border border-slate/15 rounded-none p-6 flex flex-col cursor-pointer hover:border-b-2 hover:border-b-thistle transition-all group overflow-hidden md:col-span-3">
                            <div className="mb-4 text-obsidian"><Map size={24} /></div>
-                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">Interactive Map</h4>
-                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Logic over Luck spatial guide.</p>
+                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">The Compass</h4>
+                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Our "Logic over Luck" interactive guide to the magic around you.</p>
                         </div>
                      </div>
                   </div>
 
-                  {/* Pillar Two: The Blueprint */}
+                  {/* The Grand Plan */}
                   <div>
-                     <h3 className="text-3xl font-header text-obsidian mb-6 pb-4 border-b border-slate/15">Pillar Two: The Blueprint</h3>
+                     <h3 className="text-3xl font-header text-obsidian mb-6 pb-4 border-b border-slate/15">The Grand Plan</h3>
                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div onClick={() => setActiveView('adventures')} className="bg-white border border-slate/15 rounded-none p-6 flex flex-col cursor-pointer hover:border-b-2 hover:border-b-thistle transition-all group overflow-hidden">
                            <div className="mb-4 text-obsidian"><MapPin size={24} /></div>
-                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">Citadel Plan</h4>
-                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Master strategic document.</p>
+                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">The Intelligent Blueprint</h4>
+                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Your master strategic vision.</p>
                         </div>
                         <div onClick={() => setActiveView('calendar')} className="bg-white border border-slate/15 rounded-none p-6 flex flex-col cursor-pointer hover:border-b-2 hover:border-b-thistle transition-all group overflow-hidden">
                            <div className="mb-4 text-obsidian"><Calendar size={24} /></div>
-                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">Crowd Calendar</h4>
-                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Predictive density modeling.</p>
+                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">The Magic Window</h4>
+                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Predictive crowd modeling and timing.</p>
                         </div>
                         <div onClick={() => setActiveView('transportation')} className="bg-white border border-slate/15 rounded-none p-6 flex flex-col cursor-pointer hover:border-b-2 hover:border-b-thistle transition-all group overflow-hidden">
                            <div className="mb-4 text-obsidian"><Compass size={24} /></div>
-                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">Transportation</h4>
-                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Logistics and transit strategies.</p>
+                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">The Royal Carriage</h4>
+                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Refined logistics for transit and arrivals.</p>
                         </div>
                      </div>
                   </div>
 
                   {/* Pillar Three: The Library & Provisions */}
                   <div>
-                     <h3 className="text-3xl font-header text-obsidian mb-6 pb-4 border-b border-slate/15">Pillar Three: The Library &amp; Provisions</h3>
+                     <h3 className="text-3xl font-header text-obsidian mb-6 pb-4 border-b border-slate/15">The Field Kit</h3>
                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div onClick={() => setActiveView('library')} className="bg-white border border-slate/15 rounded-none p-6 flex flex-col cursor-pointer hover:border-b-2 hover:border-b-thistle transition-all group overflow-hidden">
                            <div className="mb-4 text-obsidian"><BookOpen size={24} /></div>
-                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">The Library</h4>
-                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Curated knowledge &amp; Whispers.</p>
+                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">The Library of Whispers</h4>
+                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Curated secrets, menus, and hidden details.</p>
                         </div>
                         <div onClick={() => setActiveView('packing')} className="bg-white border border-slate/15 rounded-none p-6 flex flex-col cursor-pointer hover:border-b-2 hover:border-b-thistle transition-all group overflow-hidden">
                            <div className="mb-4 text-obsidian"><Briefcase size={24} /></div>
-                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">Smart Packing</h4>
-                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Contextual gear checklists.</p>
+                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">The Traveler's Trunk</h4>
+                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Contextual packing and gear checklists.</p>
                         </div>
                         <div onClick={() => setActiveView('crew')} className="bg-white border border-slate/15 rounded-none p-6 flex flex-col cursor-pointer hover:border-b-2 hover:border-b-thistle transition-all group overflow-hidden">
                            <div className="mb-4 text-obsidian"><Users size={24} /></div>
-                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">Family &amp; Friends</h4>
-                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Multi-Sovereign permissions.</p>
+                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">The Inner Circle</h4>
+                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Managing your family, friends, and shared access keys.</p>
                         </div>
                      </div>
                   </div>
 
-                  {/* Pillar Four: The Echo */}
+                  {/* The Keepsake */}
                   <div>
-                     <h3 className="text-3xl font-header text-obsidian mb-6 pb-4 border-b border-slate/15">Pillar Four: The Echo</h3>
+                     <h3 className="text-3xl font-header text-obsidian mb-6 pb-4 border-b border-slate/15">The Keepsake</h3>
                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div onClick={() => setActiveView('keepsake')} className="bg-white border border-slate/15 rounded-none p-6 flex flex-col cursor-pointer hover:border-b-2 hover:border-b-thistle transition-all group overflow-hidden md:col-span-3 lg:col-span-1">
                            <div className="mb-4 text-obsidian"><ShieldCheck size={24} /></div>
-                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">Digital Keepsake</h4>
-                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Archival record of the experience.</p>
+                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">The Digital Gallery</h4>
+                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Your archival record and post-trip "Echo."</p>
                         </div>
                      </div>
                   </div>
@@ -1829,8 +1829,8 @@ function App() {
           {activeView === 'transportation' && (
             <div className="view-transportation animate-in fade-in zoom-in-95 duration-300">
               <div className="text-left mb-8">
-                <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><Compass className="text-gold" /> Transportation Explorer</h2>
-                <p className="opacity-60">Master the resort transit networks and estimate your travel times between parks and hotels.</p>
+                <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><Compass className="text-gold" /> The Royal Carriage</h2>
+                <p className="opacity-60">Refined logistics for transit and arrivals across the resort.</p>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -1950,8 +1950,8 @@ function App() {
             <div className="view-calendar animate-in fade-in zoom-in-95 duration-300">
                <div className="text-left mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                 <div>
-                  <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><Calendar className="text-gold" /> Crowd Calendar</h2>
-                  <p className="opacity-60">Plan your trip around historical crowd levels, events, and seasonal pricing.</p>
+                  <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><Calendar className="text-gold" /> The Magic Window</h2>
+                  <p className="opacity-60">Predictive crowd modeling and timing to find your perfect window.</p>
                 </div>
                 
                 <div className="flex flex-col md:flex-row items-start md:items-center gap-4 w-full md:w-auto">
@@ -2269,8 +2269,8 @@ function App() {
               <div className="view-map animate-in fade-in zoom-in-95 duration-500 h-[calc(100vh-140px)] flex flex-col">
                 <div className="flex justify-between items-end mb-6 shrink-0">
                   <div>
-                    <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><Map className="text-gold" /> Interactive Map</h2>
-                    <p className="opacity-60">Visualize your itinerary and navigate the parks seamlessly.</p>
+                    <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><Map className="text-gold" /> The Compass</h2>
+                    <p className="opacity-60">Our "Logic over Luck" interactive guide to the magic around you.</p>
                   </div>
                   <div className="flex gap-2">
                      <button className="bg-white border border-navy/10 text-navy px-4 py-2 rounded-xl text-xs font-bold shadow-sm flex items-center gap-2"><MapPin size={14} className="text-rose"/> Magic Kingdom</button>
@@ -2335,7 +2335,7 @@ function App() {
               <div className="view-packing animate-in fade-in zoom-in-95 duration-500">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
                   <div>
-                     <h2 className="text-4xl font-header mb-2 text-navy flex items-center gap-3"><Umbrella className="text-gold" /> Smart Packing</h2>
+                     <h2 className="text-4xl font-header mb-2 text-navy flex items-center gap-3"><Umbrella className="text-gold" /> The Traveler's Trunk</h2>
                      <p className="opacity-60">AI-generated checklist based on your park days, reservations, and weather forecasts.</p>
                   </div>
                   <div className="flex gap-2">
@@ -2450,7 +2450,7 @@ function App() {
               <div className="view-keepsake animate-in fade-in zoom-in-95 duration-500">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
                   <div>
-                     <h2 className="text-4xl font-header mb-2 text-navy flex items-center gap-3"><Camera className="text-gold" /> The Digital Keepsake</h2>
+                     <h2 className="text-4xl font-header mb-2 text-navy flex items-center gap-3"><Camera className="text-gold" /> The Digital Gallery</h2>
                      <p className="opacity-60">Relive your magical memories, stats, and hidden secrets uncovered during your journey.</p>
                   </div>
                   <div className="flex gap-3">
@@ -2676,11 +2676,11 @@ function App() {
                          </li>
                          <li className="flex items-start gap-3 text-sm text-white/90">
                             <Check size={18} className="text-gold shrink-0 mt-0.5" />
-                            <span>Smart Packing Lists & Weather Intel</span>
+                            <span>The Traveler's Trunk & Weather Intel</span>
                          </li>
                          <li className="flex items-start gap-3 text-sm text-white/90">
                             <Check size={18} className="text-gold shrink-0 mt-0.5" />
-                            <span>Digital Keepsakes & Memory Vaults</span>
+                            <span>The Digital Gallery & Memories</span>
                          </li>
                       </ul>
                       
@@ -2856,7 +2856,7 @@ function App() {
                <div className="view-adventures animate-in fade-in zoom-in-95 duration-500">
                   <div className="flex justify-between items-end mb-10">
                      <div className="text-left">
-                        <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><MapPin className="text-gold" /> My Upcoming Adventures</h2>
+                        <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><MapPin className="text-gold" /> The Intelligent Blueprint</h2>
                         <p className="opacity-60">Your complete archive of past, present, and future trips.</p>
                      </div>
                      <button

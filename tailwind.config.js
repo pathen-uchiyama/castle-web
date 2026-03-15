@@ -16,6 +16,10 @@ export default {
                 'rose-light': '#ff8fa3',
                 alabaster: '#FAF9F6',
                 cream: '#F4F1DE',
+                parchment: '#F9F7F2',
+                slate: '#626466',
+                thistle: '#5D4B7A',
+                obsidian: '#1A1A1B',
             },
             fontFamily: {
                 header: ['"Playfair Display"', 'serif'],

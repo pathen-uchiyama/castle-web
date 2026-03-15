@@ -590,7 +590,6 @@ function App() {
     };
     setAdventures([...adventures, newAdv]);
     setActiveAdventureId(newAdv.id);
-    setWizardStep(1);
     setActiveView('trip_dashboard');
   };
 
@@ -615,106 +614,21 @@ function App() {
 
   return (
     <AlphaGate>
-      <div className={`dashboard-layout ${(activeView === 'guest_survey' || activeView === 'account_setup') ? 'guest-survey-mode' : ''}`}>
-      {/* Sidebar - Hide if survey mode or account setup */}
-      {activeView !== 'guest_survey' && activeView !== 'account_setup' && (
-        <aside className="sidebar">
-          <div className="logo-container">
-            <div className="bg-gold p-1.5 rounded-lg">
-              <Shield size={18} className="text-navy" />
-            </div>
-            <span className="logo-text">CASTLE <span className="text-gold">COMPANION</span></span>
-          </div>
-
-          {isTripMode ? (
-            <button
-              onClick={() => {
-                setActiveView('home');
-                setActiveAdventureId('');
-              }}
-              className="w-full mb-8 py-3 bg-navy/5 text-navy rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-navy/10 transition-all flex items-center justify-center gap-2"
-            >
-              <ArrowRight size={16} className="rotate-180" /> Back to Home
-            </button>
-          ) : (
-            <button
-              onClick={() => {
-                setWizardData({
-                  name: 'New Adventure',
-                  startDate: '',
-                  endDate: '',
-                  parks: ['Magic Kingdom'],
-                  pacing: 'moderate',
-                  primaryFocus: 'classic',
-                  dining: 'signature',
-                  breakStrategy: 'power',
-                  singleRiderAllowed: false,
-                  dasAllowed: false,
-                  llMultiPassAllowed: false,
-                  llSinglePassAllowed: false,
-                  arrivalIntent: 'leisurely',
-                  onSite: true,
-                  hotelName: '',
-                  splurgeAppetite: 'moderate',
-                  premiumInterests: [],
-                  diningReservationIntent: false,
-                  guests: []
-                });
-                setWizardStep(1);
-                setActiveView('new_trip');
-              }}
-              className="w-full mb-8 py-3.5 bg-gold text-navy rounded-full font-black text-xs uppercase tracking-widest hover:shadow-lg hover:shadow-gold/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
-            >
-              <Plus size={16} /> New Trip
-            </button>
-          )}
-
-          <nav className="sidebar-nav">
-            {sidebarItems.map(item => (
-              <button
-                key={item.id}
-                onClick={() => setActiveView(item.id as View)}
-                className={`nav-item ${activeView === item.id ? 'active' : ''}`}
-              >
-                <item.icon size={20} />
-                <span>{item.label}</span>
-                {activeView === item.id && <div className="active-glow" />}
+      <div className={`min-h-screen bg-parchment text-obsidian font-sans flex flex-col ${(activeView === 'guest_survey' || activeView === 'account_setup') ? 'guest-survey-mode' : ''}`}>
+      
+      {/* Global Top Nav for Sub-Views */}
+      {activeView !== 'guest_survey' && activeView !== 'account_setup' && activeView !== 'home' && (
+        <header className="w-full flex justify-between items-center px-8 py-4 border-b border-slate/15 bg-white shrink-0">
+           <div className="flex items-center gap-4">
+              <button title="Command Center" onClick={() => setActiveView('home')} className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate hover:text-navy transition-colors">
+                 <ArrowRight size={14} className="rotate-180" /> Command Center
               </button>
-            ))}
-          </nav>
-
-          <div className="sidebar-footer">
-            <div className="user-pill">
-              <div className="avatar">P</div>
-              <div className="user-info">
-                <span className="user-name">Patchen</span>
-                <span className="user-role">Lead Planner</span>
-              </div>
-              <LogOut size={16} className="logout-icon" />
-            </div>
-          </div>
-        </aside>
-      )}
-
-      {/* Main Content Area */}
-      <main className="main-content">
-        {activeView !== 'guest_survey' && activeView !== 'account_setup' && (
-          <header className="content-header">
-            <div className="header-breadcrumbs">
-              <span className="opacity-40 uppercase tracking-widest text-[10px] font-black">Planning Portal</span>
-              <ChevronRight size={12} className="opacity-20" />
-              <span className="uppercase tracking-widest text-[10px] font-black">
-                {activeView === 'home' ? 'Home' : (activeView === 'trip_dashboard' ? 'Daily Itinerary' : activeView.replace('_', ' '))}
-              </span>
-            </div>
-            <div className="header-actions">
-              <div className="telemetry-pill mr-2">
-                <div className="status-dot pulse" />
-                <span>MAGIC AWAITS</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white rounded-xl shadow-sm border border-navy/5 p-1 relative">
+           </div>
+           
+           <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 bg-parchment rounded-none shadow-sm border border-slate/15 p-1 relative">
                 <select 
-                  className="bg-transparent border border-transparent rounded-lg pl-3 pr-8 py-1.5 text-[10px] font-black uppercase tracking-widest text-navy outline-none focus:bg-navy/5 transition-colors cursor-pointer appearance-none z-10 relative bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%230A1929%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_8px_center]"
+                  className="bg-transparent border border-transparent pl-3 pr-8 py-1.5 text-[10px] font-black uppercase tracking-widest text-obsidian outline-none cursor-pointer appearance-none z-10 relative bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%231A1A1B%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_8px_center]"
                   value={activeAdventureId} 
                   onChange={(e) => setActiveAdventureId(e.target.value)}
                   title="Switch Active Trip"
@@ -724,145 +638,135 @@ function App() {
                   ))}
                 </select>
               </div>
-              <button title="Settings" onClick={() => setActiveView('settings')} className="w-9 h-9 shrink-0 ml-1 rounded-xl bg-white text-navy flex items-center justify-center hover:bg-navy hover:text-white transition-colors shadow-sm border border-navy/5">
-                <Settings size={16} />
-              </button>
+           </div>
+        </header>
+      )}
+
+      {/* Main Content Area */}
+      <main className={`flex-1 ${activeView !== 'home' ? 'p-8' : 'p-0'}`}>
+        
+        {/* 0. SOVEREIGN DASHBOARD (HOME) */}
+        {activeView === 'home' && (
+          <div className="view-home animate-in fade-in duration-500 w-full flex flex-col items-center py-12 px-6">
+            
+            {/* Header Greeting */}
+            <div className="text-center mb-16 flex flex-col items-center">
+               <div className="mb-8 p-3 bg-obsidian rounded-none border border-slate/20 flex items-center justify-center">
+                 <Shield size={32} className="text-parchment" />
+               </div>
+               <h1 className="text-4xl md:text-5xl font-header text-obsidian tracking-tight">Welcome, Patchen. Your Strategy is Active.</h1>
             </div>
-          </header>
-        )}
 
-        <div className="view-container">
-          {/* 0. HOME DASHBOARD VIEW */}
-          {activeView === 'home' && (
-            <div className="view-home animate-in fade-in zoom-in-95 duration-500">
-              <div className="flex justify-between items-end mb-10">
-                <div>
-                  <h1 className="text-4xl font-header mb-2 text-navy">Welcome Home</h1>
-                  <p className="opacity-60 text-sm">Review your upcoming adventures or start planning a new one.</p>
-                </div>
-              </div>
-
-              <div className="mb-12">
-                <h3 className="text-xl font-header mb-6 flex items-center gap-2"><MapPin size={20} className="text-gold" /> Active Adventures</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                  {adventures.filter(a => a.status !== 'past').map(adv => (
-                    <div key={adv.id} onClick={() => { setActiveAdventureId(adv.id); setActiveView('trip_dashboard'); }} className="luxury-card p-6 cursor-pointer hover:-translate-y-1 transition-transform group relative overflow-hidden">
-                      <div className="absolute top-0 left-0 w-full h-1 bg-gold"></div>
-                      <div className="w-12 h-12 bg-gold/10 rounded-2xl flex items-center justify-center mb-6 text-gold group-hover:scale-110 transition-transform">
-                        <Compass size={24} />
-                      </div>
-                      <h4 className="font-header text-xl mb-2">{adv.name}</h4>
-                      <p className="text-xs opacity-60 mb-6">{adv.parks.join(', ')}</p>
-                      <div className="flex justify-between items-center text-xs font-bold uppercase tracking-widest text-gold mt-auto pt-4 border-t border-navy/5">
-                        <span>{new Date(adv.startDate).toLocaleDateString()}</span>
-                        <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-10px] group-hover:translate-x-0 duration-300" />
-                      </div>
-                    </div>
-                  ))}
-
-                  <div onClick={() => setActiveView('new_trip')} className="luxury-card p-6 cursor-pointer hover:-translate-y-1 transition-transform group border-2 border-dashed border-navy/10 hover:border-gold/50 bg-transparent flex flex-col items-center justify-center min-h-[220px]">
-                    <div className="w-12 h-12 bg-navy/5 rounded-full flex items-center justify-center mb-4 text-navy opacity-40 group-hover:opacity-100 transition-opacity">
-                      <Plus size={24} />
-                    </div>
-                    <span className="font-bold text-sm">Add New Adventure</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mb-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Dining Reservation Sniper Widget */}
-                <div className="luxury-card p-6 md:p-8 border-t-4 border-gold bg-gradient-to-br from-white to-gold/5 flex flex-col items-start text-left relative overflow-hidden group shadow-md hover:shadow-lg transition-shadow">
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-gold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
-                  <div className="flex justify-between items-start w-full mb-3 relative z-10">
-                     <h3 className="text-2xl font-header flex items-center gap-2"><Utensils size={20} className="text-gold" /> Dining Sniper</h3>
-                     <span className="bg-navy px-2.5 py-1 rounded-md text-[9px] font-black uppercase tracking-widest text-gold animate-pulse flex items-center gap-1.5"><RefreshCw size={8} className="animate-spin" /> Scanning</span>
-                  </div>
-                  <p className="text-xs text-navy/60 mb-8 relative z-10 max-w-sm">Currently hunting for your hard-to-get table service reservations.</p>
+            <div className="w-full max-w-5xl">
+               
+               {/* The Four Citadel Pillars */}
+               <div className="flex flex-col gap-12 w-full max-w-6xl mx-auto">
                   
-                  <div className="w-full space-y-3 relative z-10">
-                    <div className="bg-white/80 backdrop-blur-md border border-navy/10 p-4 rounded-2xl flex items-center justify-between shadow-sm">
-                       <div>
-                         <span className="font-bold text-sm block text-navy mb-0.5">Space 220 Restaurant</span>
-                         <span className="text-[10px] font-black text-navy/50 uppercase tracking-widest block flex items-center gap-1"><Calendar size={10}/> Oct 14 • Dinner (4 Guests)</span>
-                       </div>
-                       <RefreshCw size={14} className="text-gold animate-spin opacity-50" />
-                    </div>
-                    <div className="bg-white/80 backdrop-blur-md border border-navy/10 p-4 rounded-2xl flex items-center justify-between shadow-sm">
-                       <div>
-                         <span className="font-bold text-sm block text-navy mb-0.5">Oga's Cantina</span>
-                         <span className="text-[10px] font-black text-navy/50 uppercase tracking-widest block flex items-center gap-1"><Calendar size={10}/> Oct 16 • Drinks (2 Guests)</span>
-                       </div>
-                       <RefreshCw size={14} className="text-gold animate-spin opacity-50" />
-                    </div>
+                  {/* Pillar One: The Pulse */}
+                  <div>
+                     <h3 className="text-3xl font-header text-obsidian mb-6 pb-4 border-b border-slate/15">Pillar One: The Pulse</h3>
+                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div onClick={() => setActiveView('home')} className="bg-white border border-slate/15 rounded-none p-6 flex flex-col cursor-pointer hover:border-b-2 hover:border-b-thistle transition-all group overflow-hidden">
+                           <div className="mb-4 text-obsidian"><Home size={24} /></div>
+                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">Home Dashboard</h4>
+                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Central at-a-glance status.</p>
+                        </div>
+                        <div onClick={() => {
+                           const activeAdv = adventures.find(a => a.status !== 'past');
+                           if (activeAdv) {
+                              setActiveAdventureId(activeAdv.id);
+                              setActiveView('trip_dashboard');
+                           } else {
+                              setActiveView('new_trip');
+                           }
+                        }} className="bg-white border-2 border-thistle rounded-none p-6 flex flex-col cursor-pointer hover:bg-thistle transition-all group overflow-hidden relative md:col-span-2">
+                           <div className="absolute top-0 right-0 p-2 text-thistle group-hover:text-white">
+                              <Compass size={16} />
+                           </div>
+                           <div className="mb-4 text-thistle group-hover:text-white"><Compass size={28} /></div>
+                           <h4 className="text-2xl font-header text-thistle group-hover:text-white mb-2 truncate">My Adventure</h4>
+                           <p className="text-slate font-sans tracking-tight text-sm overflow-hidden text-ellipsis whitespace-nowrap group-hover:text-white/80">Active, time-synced itinerary operational logic.</p>
+                           <span className="mt-8 text-xs font-black uppercase tracking-widest text-thistle group-hover:text-white flex justify-between items-center">
+                             The Sovereign Key
+                             <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                           </span>
+                        </div>
+                        <div onClick={() => setActiveView('map')} className="bg-white border border-slate/15 rounded-none p-6 flex flex-col cursor-pointer hover:border-b-2 hover:border-b-thistle transition-all group overflow-hidden md:col-span-3">
+                           <div className="mb-4 text-obsidian"><Map size={24} /></div>
+                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">Interactive Map</h4>
+                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Logic over Luck spatial guide.</p>
+                        </div>
+                     </div>
                   </div>
-                  <button className="mt-6 text-[10px] font-black uppercase tracking-widest text-navy/40 hover:text-gold flex items-center gap-1 transition-colors relative z-10 bg-navy/5 px-4 py-2 rounded-lg hover:bg-gold/10"><Plus size={12}/> New Alert</button>
-                </div>
 
-                {/* Budget & Expense Tracker Widget */}
-                <div className="luxury-card p-6 md:p-8 border-t-4 border-emerald-400 bg-gradient-to-br from-white to-emerald-50/50 flex flex-col items-start text-left relative overflow-hidden shadow-md hover:shadow-lg transition-shadow">
-                   <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
-                   <div className="flex justify-between items-start w-full mb-4 relative z-10">
-                     <h3 className="text-2xl font-header flex items-center gap-2 text-navy"><PieChart size={20} className="text-emerald-500" /> Trip Budget</h3>
-                     <span className="bg-emerald-100 border border-emerald-200 px-2.5 py-1 rounded-md text-[9px] font-black uppercase tracking-widest text-emerald-700 flex items-center gap-1"><CheckCircle size={10} /> On Track</span>
-                   </div>
-                   
-                   <div className="flex items-end gap-3 mb-8 relative z-10">
-                     <span className="text-5xl font-header leading-none text-navy">$3,450</span>
-                     <span className="text-sm font-bold text-navy/40 mb-1">/ $5,000</span>
-                   </div>
-
-                   <div className="w-full relative z-10 mb-2">
-                      <div className="h-2 w-full bg-navy/5 rounded-full overflow-hidden mb-3">
-                         <div className="h-full bg-emerald-400 rounded-full" style={{ width: '69%' }}></div>
-                      </div>
-                      <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-navy/50">
-                         <span>69% Spent</span>
-                         <span>$1,550 Remaining</span>
-                      </div>
-                   </div>
-
-                   <div className="flex flex-wrap gap-3 w-full mt-auto relative z-10 pt-4">
-                     <div className="flex-1 min-w-[100px] bg-white border border-navy/5 rounded-2xl p-3 flex items-center gap-3 shadow-sm">
-                        <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center shrink-0"><Home size={14}/></div>
-                        <div>
-                          <span className="text-[9px] font-black uppercase tracking-widest text-navy/40 block mb-0.5">Hotel</span>
-                          <span className="text-sm font-bold text-navy block leading-none">$1.8k</span>
+                  {/* Pillar Two: The Blueprint */}
+                  <div>
+                     <h3 className="text-3xl font-header text-obsidian mb-6 pb-4 border-b border-slate/15">Pillar Two: The Blueprint</h3>
+                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div onClick={() => setActiveView('adventures')} className="bg-white border border-slate/15 rounded-none p-6 flex flex-col cursor-pointer hover:border-b-2 hover:border-b-thistle transition-all group overflow-hidden">
+                           <div className="mb-4 text-obsidian"><MapPin size={24} /></div>
+                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">Citadel Plan</h4>
+                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Master strategic document.</p>
+                        </div>
+                        <div onClick={() => setActiveView('calendar')} className="bg-white border border-slate/15 rounded-none p-6 flex flex-col cursor-pointer hover:border-b-2 hover:border-b-thistle transition-all group overflow-hidden">
+                           <div className="mb-4 text-obsidian"><Calendar size={24} /></div>
+                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">Crowd Calendar</h4>
+                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Predictive density modeling.</p>
+                        </div>
+                        <div onClick={() => setActiveView('transportation')} className="bg-white border border-slate/15 rounded-none p-6 flex flex-col cursor-pointer hover:border-b-2 hover:border-b-thistle transition-all group overflow-hidden">
+                           <div className="mb-4 text-obsidian"><Compass size={24} /></div>
+                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">Transportation</h4>
+                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Logistics and transit strategies.</p>
                         </div>
                      </div>
-                     <div className="flex-1 min-w-[100px] bg-white border border-navy/5 rounded-2xl p-3 flex items-center gap-3 shadow-sm">
-                        <div className="w-8 h-8 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center shrink-0"><Map size={14}/></div>
-                        <div>
-                          <span className="text-[9px] font-black uppercase tracking-widest text-navy/40 block mb-0.5">Tickets</span>
-                          <span className="text-sm font-bold text-navy block leading-none">$950</span>
-                        </div>
-                     </div>
-                     <div className="flex-1 min-w-[100px] bg-white border border-navy/5 rounded-2xl p-3 flex items-center gap-3 shadow-sm">
-                        <div className="w-8 h-8 rounded-xl bg-rose/10 text-rose flex items-center justify-center shrink-0"><Utensils size={14}/></div>
-                        <div>
-                          <span className="text-[9px] font-black uppercase tracking-widest text-navy/40 block mb-0.5">Food</span>
-                          <span className="text-sm font-bold text-navy block leading-none">$420</span>
-                        </div>
-                     </div>
-                   </div>
-                </div>
-              </div>
+                  </div>
 
-              <div>
-                <h3 className="text-xl font-header mb-6 flex items-center gap-2"><History size={20} className="opacity-40" /> Past Adventures</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {adventures.filter(a => a.status === 'past').map(adv => (
-                    <div key={adv.id} onClick={() => { setActiveAdventureId(adv.id); setActiveView('trip_dashboard'); }} className="luxury-card p-6 opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
-                      <h4 className="font-header text-lg mb-1">{adv.name}</h4>
-                      <p className="text-[10px] uppercase font-bold tracking-widest mb-4">{new Date(adv.startDate).getFullYear()}</p>
-                      <button className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-1 hover:text-gold transition-colors">
-                        View Log <ArrowRight size={10} />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
+                  {/* Pillar Three: The Library & Provisions */}
+                  <div>
+                     <h3 className="text-3xl font-header text-obsidian mb-6 pb-4 border-b border-slate/15">Pillar Three: The Library &amp; Provisions</h3>
+                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div onClick={() => setActiveView('library')} className="bg-white border border-slate/15 rounded-none p-6 flex flex-col cursor-pointer hover:border-b-2 hover:border-b-thistle transition-all group overflow-hidden">
+                           <div className="mb-4 text-obsidian"><BookOpen size={24} /></div>
+                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">The Library</h4>
+                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Curated knowledge &amp; Whispers.</p>
+                        </div>
+                        <div onClick={() => setActiveView('packing')} className="bg-white border border-slate/15 rounded-none p-6 flex flex-col cursor-pointer hover:border-b-2 hover:border-b-thistle transition-all group overflow-hidden">
+                           <div className="mb-4 text-obsidian"><Briefcase size={24} /></div>
+                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">Smart Packing</h4>
+                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Contextual gear checklists.</p>
+                        </div>
+                        <div onClick={() => setActiveView('crew')} className="bg-white border border-slate/15 rounded-none p-6 flex flex-col cursor-pointer hover:border-b-2 hover:border-b-thistle transition-all group overflow-hidden">
+                           <div className="mb-4 text-obsidian"><Users size={24} /></div>
+                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">Family &amp; Friends</h4>
+                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Multi-Sovereign permissions.</p>
+                        </div>
+                     </div>
+                  </div>
+
+                  {/* Pillar Four: The Echo */}
+                  <div>
+                     <h3 className="text-3xl font-header text-obsidian mb-6 pb-4 border-b border-slate/15">Pillar Four: The Echo</h3>
+                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div onClick={() => setActiveView('keepsake')} className="bg-white border border-slate/15 rounded-none p-6 flex flex-col cursor-pointer hover:border-b-2 hover:border-b-thistle transition-all group overflow-hidden md:col-span-3 lg:col-span-1">
+                           <div className="mb-4 text-obsidian"><ShieldCheck size={24} /></div>
+                           <h4 className="text-xl font-header text-obsidian mb-2 truncate">Digital Keepsake</h4>
+                           <p className="text-slate font-sans tracking-tight text-xs overflow-hidden text-ellipsis whitespace-nowrap">Archival record of the experience.</p>
+                        </div>
+                     </div>
+                  </div>
+
+               </div>
+               
+               {/* Footer / Settings Access from Dashboard */}
+               <div className="mt-16 pt-8 border-t border-slate/15 flex justify-center">
+                  <button title="System Preferences" onClick={() => setActiveView('settings')} className="text-[10px] font-black uppercase tracking-widest text-slate hover:text-obsidian flex items-center gap-2 transition-colors">
+                     <Settings size={14} /> System Preferences
+                  </button>
+               </div>
+
             </div>
-          )}
+          </div>
+        )}
 
           {/* 1. UNIFIED TRIP DASHBOARD VIEW */}
           {activeView === 'trip_dashboard' && (() => {
@@ -2044,7 +1948,7 @@ function App() {
           {/* 6. CROWD CALENDAR VIEW */}
           {activeView === 'calendar' && (
             <div className="view-calendar animate-in fade-in zoom-in-95 duration-300">
-              <div className="text-left mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+               <div className="text-left mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                 <div>
                   <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><Calendar className="text-gold" /> Crowd Calendar</h2>
                   <p className="opacity-60">Plan your trip around historical crowd levels, events, and seasonal pricing.</p>
@@ -2052,14 +1956,10 @@ function App() {
                 
                 <div className="flex flex-col md:flex-row items-start md:items-center gap-4 w-full md:w-auto">
                    {/* Context Filter */}
-                   <div className="relative w-full md:w-48">
-                      <select title="Park Context" className="w-full bg-white border border-navy/10 rounded-xl py-2 pl-4 pr-10 text-xs font-bold text-navy appearance-none outline-none focus:border-gold transition-colors cursor-pointer shadow-sm">
-                         <option value="all" className="text-navy">All Walt Disney World</option>
-                         <option value="mk" className="text-navy">Magic Kingdom Park</option>
-                         <option value="ep" className="text-navy">Epcot</option>
-                         <option value="hs" className="text-navy">Disney's Hollywood Studios</option>
-                         <option value="ak" className="text-navy">Disney's Animal Kingdom</option>
-                         <option value="dlr" className="text-navy">Disneyland Resort (CA)</option>
+                   <div className="relative w-full md:w-64">
+                      <select title="Resort Context" className="w-full bg-white border border-navy/10 rounded-xl py-2 pl-4 pr-10 text-xs font-bold text-navy appearance-none outline-none focus:border-gold transition-colors cursor-pointer shadow-sm">
+                         <option value="wdw" className="text-navy">Walt Disney World (All Parks)</option>
+                         <option value="dlr" className="text-navy">Disneyland Resort (All Parks)</option>
                       </select>
                       <ChevronDown size={12} className="absolute right-4 top-1/2 -translate-y-1/2 text-navy/40 pointer-events-none" />
                    </div>
@@ -2067,7 +1967,7 @@ function App() {
                    {/* Legend */}
                    <div className="flex flex-wrap gap-4 bg-white px-4 py-2 rounded-2xl border border-navy/5 shadow-sm">
                       <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-navy/60"><div className="w-3 h-3 rounded-full bg-emerald-100 border border-emerald-300"></div> Low</div>
-                      <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-navy/60"><div className="w-3 h-3 rounded-full bg-amber-100 border border-amber-300"></div> Moderate</div>
+                      <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-navy/60"><div className="w-3 h-3 rounded-full bg-amber-100 border border-amber-300"></div> Mod</div>
                       <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-navy/60"><div className="w-3 h-3 rounded-full bg-rose/10 border border-rose/20"></div> High</div>
                       <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-navy/60"><div className="w-3 h-3 rounded-full bg-purple-100 border border-purple-300"></div> Peak</div>
                    </div>
@@ -2099,34 +1999,60 @@ function App() {
                   {Array.from({ length: 30 }).map((_, i) => {
                      const date = i + 1;
                      // generate mock crowd data
-                     let level = 'moderate';
-                     let color = 'bg-amber-50 border-amber-200 text-amber-700 hover:border-amber-400 hover:shadow-amber-100/50';
+                     let overallLevel = 'mod';
+                     let overallColor = 'bg-amber-50 border-amber-200 text-amber-700 hover:border-amber-400 hover:shadow-amber-100/50';
                      let event = null;
                      
+                     // Park specific mockup strings (e.g. MK: High, EP: Mod)
+                     let parksData = [
+                        { name: 'MK', level: 'high', color: 'bg-rose/20' },
+                        { name: 'EP', level: 'mod', color: 'bg-amber-100' },
+                        { name: 'HS', level: 'peak', color: 'bg-purple-200' },
+                        { name: 'AK', level: 'low', color: 'bg-emerald-100' }
+                     ];
+
                      if (date >= 4 && date <= 7) {
-                         level = 'peak';
-                         color = 'bg-purple-50 border-purple-200 text-purple-700 hover:border-purple-400 hover:shadow-purple-100/50';
+                         overallLevel = 'peak';
+                         overallColor = 'bg-purple-50 border-purple-200 text-purple-700 hover:border-purple-400 hover:shadow-purple-100/50';
                          event = 'Labor Day Weekend';
+                         parksData = parksData.map(p => ({...p, level: 'peak', color: 'bg-purple-200'}));
                      } else if (date === 1 || date === 2 || date === 3) {
-                         level = 'high';
-                         color = 'bg-rose/5 border-rose/20 text-rose hover:border-rose/40 hover:shadow-rose-100/50';
+                         overallLevel = 'high';
+                         overallColor = 'bg-rose/5 border-rose/20 text-rose hover:border-rose/40 hover:shadow-rose-100/50';
+                         parksData[0].level = 'peak'; parksData[0].color = 'bg-purple-200';
+                         parksData[3].level = 'high'; parksData[3].color = 'bg-rose/20';
                      } else if (date >= 15 && date <= 18) {
-                         level = 'low';
-                         color = 'bg-emerald-50 border-emerald-200 text-emerald-700 hover:border-emerald-400 hover:shadow-emerald-100/50';
-                     } else if (date % 7 === 5 || date % 7 === 6) { // Weekends generally higher
-                         level = 'high';
-                         color = 'bg-rose/5 border-rose/20 text-rose hover:border-rose/40 hover:shadow-rose-100/50';
-                         if (date === 25) event = 'Halloween Party Start';
+                         overallLevel = 'low';
+                         overallColor = 'bg-emerald-50 border-emerald-200 text-emerald-700 hover:border-emerald-400 hover:shadow-emerald-100/50';
+                         parksData = parksData.map(p => ({...p, level: 'low', color: 'bg-emerald-100'}));
+                     } else if (date % 7 === 5 || date % 7 === 6) { 
+                         overallLevel = 'high';
+                         overallColor = 'bg-rose/5 border-rose/20 text-rose hover:border-rose/40 hover:shadow-rose-100/50';
+                         if (date === 25) {
+                            event = 'Halloween Party Start';
+                            parksData[0].level = 'low'; parksData[0].color = 'bg-emerald-100'; // MK closes early
+                         }
                      }
 
                      return (
-                      <div key={date} className={`md:h-28 h-20 rounded-2xl border-2 p-2 md:p-3 flex flex-col justify-between transition-all hover:scale-[1.03] cursor-pointer relative group shadow-sm hover:shadow-lg ${color}`}>
-                         <div className="flex justify-between items-start">
-                            <span className="font-header text-lg">{date}</span>
+                      <div key={date} className={`md:h-32 h-24 rounded-2xl border-2 p-2 flex flex-col transition-all hover:scale-[1.02] cursor-pointer relative group shadow-sm hover:shadow-lg ${overallColor}`}>
+                         <div className="flex justify-between items-start mb-1">
+                            <span className="font-header text-lg leading-none">{date}</span>
                             {event && <Sparkles size={12} className="opacity-50" />}
                          </div>
+                         
+                         {/* Multi-Park Context Grid */}
+                         <div className="grid grid-cols-2 gap-1 mb-auto mt-1">
+                            {parksData.map(park => (
+                               <div key={park.name} className="flex items-center gap-1">
+                                  <div className={`w-1.5 h-1.5 rounded-full ${park.color}`}></div>
+                                  <span className="text-[8px] font-black uppercase tracking-[0.1em] opacity-80">{park.name}</span>
+                               </div>
+                            ))}
+                         </div>
+
                          <div className="text-left mt-auto">
-                            <span className="text-[9px] font-black uppercase tracking-widest opacity-60 block">{level}</span>
+                            <span className="text-[8px] font-black uppercase tracking-widest opacity-60 block border-t border-black/5 pt-1">AVG: {overallLevel}</span>
                             {event && <span className="text-[9px] font-bold leading-tight mt-1 px-1.5 py-0.5 rounded-md bg-white/50 border border-white/20 block truncate group-hover:whitespace-normal group-hover:absolute group-hover:z-10 group-hover:bg-white group-hover:shadow-xl group-hover:w-[150%] md:group-hover:w-[200%] transition-all">{event}</span>}
                          </div>
                       </div>
@@ -2361,6 +2287,7 @@ function App() {
                 >
                    <div 
                      className="absolute inset-0 transition-transform duration-75 origin-center will-change-transform"
+                     style={{ transform: `translate(${mapPan.x}px, ${mapPan.y}px) scale(${mapZoom})` }}
                    >
                      <img src="https://media.disneywebassets.com/dam/wdpro-assets/parks-and-tickets/destinations/magic-kingdom/magic-kingdom-map-16x9.jpg" alt="Disney Map Mock" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] max-w-none object-cover opacity-80 pointer-events-none" />
                      {/* Map Overlays Mock */}
@@ -2929,7 +2856,7 @@ function App() {
                <div className="view-adventures animate-in fade-in zoom-in-95 duration-500">
                   <div className="flex justify-between items-end mb-10">
                      <div className="text-left">
-                        <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><MapPin className="text-gold" /> My Adventures</h2>
+                        <h2 className="text-3xl font-header mb-2 flex items-center gap-3"><MapPin className="text-gold" /> My Upcoming Adventures</h2>
                         <p className="opacity-60">Your complete archive of past, present, and future trips.</p>
                      </div>
                      <button
@@ -3744,8 +3671,7 @@ function App() {
             )
           }
 
-        </div >
-      </main >
+      </main>
 
       <style dangerouslySetInnerHTML={{
         __html: `
